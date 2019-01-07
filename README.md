@@ -4,4 +4,7 @@ Extensible script assembler and executor. Will have support for [CheatEngine](ht
 
 ## Credits
 
-Thanks to ZenLulz (Jämes Ménétrey) for [MemorySharp](https://github.com/ZenLulz/MemorySharp).
+* .NET Foundation Contributors for [Roslyn](https://github.com/dotnet/roslyn).
+* Immo Landwerth for [Minsk](https://github.com/terrajobst/minsk).
+* Keystone Engine contributors for [Keystone](https://github.com/keystone-engine/keystone).
+* ZenLulz (Jämes Ménétrey) for [MemorySharp](https://github.com/ZenLulz/MemorySharp).

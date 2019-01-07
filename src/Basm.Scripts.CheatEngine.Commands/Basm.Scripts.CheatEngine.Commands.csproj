@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Basm.Assemblers.ScriptAssembler\Basm.Assemblers.ScriptAssembler.csproj" />
     <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
   </ItemGroup>
 

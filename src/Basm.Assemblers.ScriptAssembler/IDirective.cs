@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Text;
+using Basm.Core.CodeAnalysis;
 using Basm.Core.CodeAnalysis.Scripting;
 
-namespace Basm.Core.CodeAnalysis
+namespace Basm.Assemblers.ScriptAssembler
 {
     /// <summary>
     /// A message defined by the assembler that executes a pre-defined function.

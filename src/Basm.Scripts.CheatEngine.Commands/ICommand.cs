@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using Basm.Core.CodeAnalysis;
-using Basm.Core.CodeAnalysis.Scripting;
+﻿using Basm.Assemblers.ScriptAssembler;
 
 namespace Basm.Scripts.CheatEngine.Commands
 {

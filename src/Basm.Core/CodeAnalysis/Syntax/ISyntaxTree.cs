@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basm.Core.CodeAnalysis.Binding
+namespace Basm.Core.CodeAnalysis.Syntax
 {
-    public abstract class BoundNode
+    public interface ISyntaxTree
     {
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Basm.Core.CodeAnalysis.Binding
 {
-    internal abstract class BoundExpression : BoundNode
+    public abstract class BoundExpression : BoundNode
     {
     }
 }

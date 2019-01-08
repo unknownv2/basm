@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
-namespace Basm.Architectures.X64.Parser.Intel
+namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
 {
-    public sealed class Lexer : ILexer
+    public class Lexer : ILexer
     {
         private readonly SourceText _text;
 

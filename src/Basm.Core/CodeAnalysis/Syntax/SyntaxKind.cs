@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Basm.Core.CodeAnalysis.Syntax
 {
+    // The types of tokens possible during text parsing.
     public enum SyntaxKind
     {
+        BadToken,
+        EndOfFileToken,
+        WhitespaceToken,
     }
 }

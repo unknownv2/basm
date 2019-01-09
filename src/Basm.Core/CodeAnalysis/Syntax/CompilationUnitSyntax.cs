@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Basm.Core.CodeAnalysis.Syntax
 {
-    public abstract class SyntaxNode
+    public class CompilationUnitSyntax : SyntaxNode
     {
-        
     }
 }

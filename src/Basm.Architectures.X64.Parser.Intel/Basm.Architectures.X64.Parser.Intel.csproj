@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="1.6.0-preview.18571.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
   </ItemGroup>
 

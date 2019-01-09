@@ -8,7 +8,7 @@ namespace Basm.Architectures.X64.Parser.Intel
 {
     public class SyntaxTree
     {
-        private CompilationUnitSyntax Root;
+        public IntelCompilationUnitSyntax Root;
 
         private SyntaxTree(SourceText text)
         {

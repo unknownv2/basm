@@ -11,6 +11,7 @@ namespace Basm.Architectures.X64.Parser.Intel
     public sealed class Parser
     {
         private readonly ImmutableArray<IntelSyntaxToken> _tokens;
+        private readonly SourceText _text;
 
         public Parser(SourceText text)
         {
@@ -21,10 +22,14 @@ namespace Basm.Architectures.X64.Parser.Intel
             do
             {
                 token = lexer.Lex();
+                if (token.Kind != SyntaxKind.WhitespaceToken)
+                {
+                    tokens.Add(token);
+                }
 
-            }
-            while (token.Kind != SyntaxKind.EndOfFileToken);
+            } while (token.Kind != SyntaxKind.EndOfFileToken);
 
+            _text = text;
             _tokens = tokens.ToImmutableArray();
         }
 
@@ -42,16 +47,15 @@ namespace Basm.Architectures.X64.Parser.Intel
             return _tokens[index];
         }
 
-        private SyntaxToken NextToken()
+        private IntelSyntaxToken NextToken()
         {
             var current = Current;
             _position++;
             return current;
         }
 
-        public CompilationUnitSyntax ParseCompilationUnit()
+        public IntelCompilationUnitSyntax ParseCompilationUnit()
         {
-
             var instruction = ParseInstruction();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
             return new IntelCompilationUnitSyntax(instruction, endOfFileToken);
@@ -59,10 +63,29 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private InstructionSyntax ParseInstruction()
         {
-            throw new NotImplementedException();
+            var expected = SyntaxKind.OpCodeToken;
+            var instruction = MatchToken(expected);
+            var operands = ImmutableArray.CreateBuilder<ExpressionSyntax>();
+            if (Current.Kind != SyntaxKind.EndOfFileToken)
+            {
+                // Parse instruction operands;
+            }
+            return new InstructionSyntax(instruction, operands.ToImmutable());
         }
 
-        private SyntaxToken MatchToken(SyntaxKind kind)
+        private StatementSyntax ParseStatement()
+        {
+            switch (Current.Kind)
+            {
+                case SyntaxKind.OpCodeToken:
+                    break;
+                default:
+                    break;
+            }
+            throw new NotImplementedException();
+
+        }
+        private IntelSyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
             {

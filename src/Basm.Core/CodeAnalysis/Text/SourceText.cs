@@ -9,7 +9,7 @@ namespace Basm.Core.CodeAnalysis.Text
         private readonly string _text;
         public SourceText(string text)
         {
-            _text = text;
+            _text = text ?? throw new ArgumentNullException(nameof(text));
         }
 
         public static SourceText From(string text)
@@ -17,7 +17,8 @@ namespace Basm.Core.CodeAnalysis.Text
             return new SourceText(text);
         }
 
-        public int Length { get; set; }
+        public int Length => _text.Length;
+
         public char this[int index] => _text[index];
 
         public override string ToString() => _text;

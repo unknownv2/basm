@@ -9,7 +9,9 @@ namespace Basm.Architectures.X64.Parser.Intel
     {
         public IntelCompilationUnitSyntax(InstructionSyntax instruction, SyntaxToken endOfFileToken)
         {
-
+            Instruction = instruction;
         }
+
+        public InstructionSyntax Instruction;
     }
 }

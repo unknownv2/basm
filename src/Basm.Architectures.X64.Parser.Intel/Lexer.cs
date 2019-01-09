@@ -23,7 +23,7 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private char PeekChar()
         {
-            char c = Peek(_offset);
+            char c = Peek(0);
             if (c != InvalidCharacter)
             {
                 AdvanceChar();
@@ -41,7 +41,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             var index = _position + offset;
             if (index >= _text.Length)
             {
-                return '\0';
+                return InvalidCharacter;
             }
 
             return _text[index];
@@ -55,6 +55,10 @@ namespace Basm.Architectures.X64.Parser.Intel
 
             switch (Current)
             {
+                case '\0':
+                case InvalidCharacter:
+                    _kind = SyntaxKind.EndOfFileToken;
+                    break;
                 case 'a':
                 case 'b':
                 case 'c':
@@ -107,7 +111,7 @@ namespace Basm.Architectures.X64.Parser.Intel
                 case 'X':
                 case 'Y':
                 case 'Z':
-                    ReadIdentifier();
+                    ReadIdentifierOrKeyword();
                     break;
                 case ' ':
                 case '\t':
@@ -135,7 +139,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             _kind = SyntaxKind.WhitespaceToken;
         }
 
-        private void ReadIdentifier()
+        private void ReadIdentifierOrKeyword()
         {
             if (IsInstructionOpCode())
             {
@@ -166,7 +170,7 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private void ScanIdentifier()
         {
-            while (Current != ' ')
+            while (char.IsLetter(Current))
             {
                 _position++;
             }

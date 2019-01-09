@@ -7,11 +7,13 @@ namespace Basm.Architectures.X64.Parser.Intel
 {
     public class IntelCompilationUnitSyntax : CompilationUnitSyntax
     {
-        public IntelCompilationUnitSyntax(InstructionSyntax instruction, SyntaxToken endOfFileToken)
+        public IntelCompilationUnitSyntax(InstructionStatementSyntax instructionStatement, SyntaxToken endOfFileToken)
         {
-            Instruction = instruction;
+            InstructionStatement = instructionStatement;
+            EndOfFileToken = endOfFileToken;
         }
 
-        public InstructionSyntax Instruction;
+        public SyntaxToken EndOfFileToken { get; }
+        public InstructionStatementSyntax InstructionStatement { get; }
     }
 }

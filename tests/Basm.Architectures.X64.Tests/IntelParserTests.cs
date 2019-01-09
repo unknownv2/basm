@@ -10,9 +10,13 @@ namespace Basm.Architectures.X64.Tests
         [Fact]
         public void ShouldParseInstructionWithZeroOperands()
         {
-            var syntaxTree = SyntaxTree.Parse("NOP");
+            const string instructionText = "NOP";
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
-            var instruction = root.Instruction;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(instructionText, instruction.InstructionToken.Text);
             Assert.Empty(instruction.Operands);
         }
 

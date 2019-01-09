@@ -61,7 +61,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             return new IntelCompilationUnitSyntax(instruction, endOfFileToken);
         }
 
-        private InstructionSyntax ParseInstruction()
+        private InstructionStatementSyntax ParseInstruction()
         {
             var expected = SyntaxKind.OpCodeToken;
             var instruction = MatchToken(expected);
@@ -70,7 +70,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             {
                 // Parse instruction operands;
             }
-            return new InstructionSyntax(instruction, operands.ToImmutable());
+            return new IntelInstructionStatementSyntax(instruction, operands.ToImmutable());
         }
 
         private StatementSyntax ParseStatement()

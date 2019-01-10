@@ -68,6 +68,13 @@ namespace Basm.Architectures.X64.Parser.Intel
             var operands = ImmutableArray.CreateBuilder<ExpressionSyntax>();
             while (Current.Kind != SyntaxKind.EndOfFileToken)
             {
+                // Skip commas since they separate the operands
+                if (Current.Kind == SyntaxKind.CommaToken)
+                {
+                    MatchToken(SyntaxKind.CommaToken);
+                    continue;
+                }
+
                 // Parse instruction operands
                 operands.Add(ParseExpressionStatement());
             }
@@ -90,6 +97,11 @@ namespace Basm.Architectures.X64.Parser.Intel
                     throw new NotImplementedException();
 
             }
+        }
+        private ExpressionSyntax ParseNameExpression()
+        {
+            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
+            return new NameExpressionSyntax(identifierToken);
         }
 
         private StatementSyntax ParseStatement()

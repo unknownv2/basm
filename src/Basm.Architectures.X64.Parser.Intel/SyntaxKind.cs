@@ -13,5 +13,6 @@ namespace Basm.Architectures.X64.Parser.Intel
         MnemonicToken,
         RegisterToken,
         IdentifierToken,
+        CommaToken
     }
 }

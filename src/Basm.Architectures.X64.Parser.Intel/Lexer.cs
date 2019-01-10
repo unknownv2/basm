@@ -60,6 +60,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                 case InvalidCharacter:
                     _kind = SyntaxKind.EndOfFileToken;
                     break;
+                case ',':
+                    _kind = SyntaxKind.CommaToken;
+                    _position++;
+                    break;
                 case 'a':
                 case 'b':
                 case 'c':
@@ -121,6 +125,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                     ReadWhiteSpace();
                     break;
                 default:
+                    if (char.IsLetter(Current))
+                    {
+                        ReadIdentifierOrKeyword();
+                    }
                     break;
             }
 
@@ -168,15 +176,15 @@ namespace Basm.Architectures.X64.Parser.Intel
             return _text.ToString(_start, length);
         }
 
-        private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic);
+        private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic.ToLower());
 
         private static readonly HashSet<string> InstructionSet = new HashSet<string>
         {
             "add", "aam", "aas", "adc", "add",
-            "nop", "push", "pop"
+            "nop", "push", "pop", "xor"
         };
 
-        private bool IsRegister(string register) =>  RegisterSet.Contains(register);
+        private bool IsRegister(string register) =>  RegisterSet.Contains(register.ToLower());
 
         private static readonly HashSet<string> RegisterSet = new HashSet<string>
         {

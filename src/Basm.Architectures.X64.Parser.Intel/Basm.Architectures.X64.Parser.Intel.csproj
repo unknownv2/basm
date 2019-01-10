@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BoundTree\" />
+  </ItemGroup>
+
 </Project>

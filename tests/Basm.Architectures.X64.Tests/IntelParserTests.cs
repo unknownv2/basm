@@ -1,6 +1,4 @@
-using System;
 using Basm.Architectures.X64.Parser.Intel;
-using Basm.Core.CodeAnalysis.Syntax;
 using Xunit;
 
 namespace Basm.Architectures.X64.Tests
@@ -19,6 +17,5 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(instructionText, instruction.InstructionToken.Text);
             Assert.Empty(instruction.Operands);
         }
-
     }
 }

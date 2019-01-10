@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
@@ -124,6 +125,18 @@ namespace Basm.Architectures.X64.Parser.Intel
                 case '\r':
                     ReadWhiteSpace();
                     break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    ReadNumericLiteral();
+                    break;
                 default:
                     if (char.IsLetter(Current))
                     {
@@ -136,6 +149,23 @@ namespace Basm.Architectures.X64.Parser.Intel
             var text = _text.ToString(_start, length);
 
             return new IntelSyntaxToken(_kind, _start, text, _value);
+        }
+
+        private void ReadNumericLiteral()
+        {
+            while (char.IsDigit(Current))
+            {
+                _position++;
+            }
+            var length = _position - _start;
+            var text = _text.ToString(_start, length);
+            if (!int.TryParse(text, out var value))
+            {
+                throw new InvalidDataException("Bad numeric literal");
+            }
+
+            _value = value;
+            _kind = SyntaxKind.NumberToken;
         }
 
         private void ReadWhiteSpace()
@@ -181,7 +211,7 @@ namespace Basm.Architectures.X64.Parser.Intel
         private static readonly HashSet<string> InstructionSet = new HashSet<string>
         {
             "add", "aam", "aas", "adc", "add",
-            "nop", "push", "pop", "xor"
+            "mov", "nop", "push", "pop", "xor"
         };
 
         private bool IsRegister(string register) =>  RegisterSet.Contains(register.ToLower());

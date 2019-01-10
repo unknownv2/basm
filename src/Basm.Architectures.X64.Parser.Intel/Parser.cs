@@ -93,15 +93,24 @@ namespace Basm.Architectures.X64.Parser.Intel
             {
                 case SyntaxKind.RegisterToken:
                     return ParseRegisterName();
+                case SyntaxKind.NumberToken:
+                    return ParseNumberLiteral();
                 default:
                     throw new NotImplementedException();
 
             }
         }
+
         private ExpressionSyntax ParseNameExpression()
         {
             var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
             return new NameExpressionSyntax(identifierToken);
+        }
+
+        private ExpressionSyntax ParseNumberLiteral()
+        {
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(numberToken);
         }
 
         private StatementSyntax ParseStatement()

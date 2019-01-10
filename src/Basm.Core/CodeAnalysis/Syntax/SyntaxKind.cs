@@ -11,6 +11,7 @@ namespace Basm.Core.CodeAnalysis.Syntax
         EndOfFileToken,
         WhitespaceToken,
         BinaryExpression,
-        NameExpression
+        NameExpression,
+        LiteralExpression
     }
 }

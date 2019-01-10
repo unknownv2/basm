@@ -141,51 +141,54 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private void ReadIdentifierOrKeyword()
         {
-            if (IsInstructionOpCode())
+            string text = ScanIdentifier();
+            if (IsInstructionOpCode(text))
             {
-                ReadInstructionOpCode();
+                _kind = SyntaxKind.MnemonicToken;
             }
-            else if (IsRegister())
+            else if (IsRegister(text))
             {
-                ReadRegister();
+                _kind = SyntaxKind.RegisterToken;
             }
             else
             {
-                ScanIdentifier();
+                
                 _kind = SyntaxKind.IdentifierToken;
             }
         }
 
-        private void ReadInstructionOpCode()
-        {
-            ScanIdentifier();
-            _kind = SyntaxKind.OpCodeToken;
-        }
-
-        private void ReadRegister()
-        {
-            ScanIdentifier();
-            _kind = SyntaxKind.RegisterToken;
-        }
-
-        private void ScanIdentifier()
+        private string ScanIdentifier()
         {
             while (char.IsLetter(Current))
             {
                 _position++;
             }
+            var length = _position - _start;
+            return _text.ToString(_start, length);
         }
 
-        private bool IsInstructionOpCode()
+        private bool IsInstructionOpCode(string text)
         {
-            return true;
+            switch (text.ToLower())
+            {
+                case "nop":
+                case "push":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
-        private bool IsRegister()
+        private bool IsRegister(string text)
         {
-            return false;
+            switch (text.ToLower())
+            {
+                case "eax":
+                case "rax":
+                    return true;
+                default:
+                    return false;
+            }
         }
-
-
     }
 }

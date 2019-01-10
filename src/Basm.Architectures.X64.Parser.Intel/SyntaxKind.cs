@@ -10,7 +10,7 @@ namespace Basm.Architectures.X64.Parser.Intel
         EndOfFileToken,
         WhitespaceToken,
         InstructionToken,
-        OpCodeToken,
+        MnemonicToken,
         RegisterToken,
         IdentifierToken,
     }

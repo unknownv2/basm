@@ -63,28 +63,46 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private InstructionStatementSyntax ParseInstruction()
         {
-            var expected = SyntaxKind.OpCodeToken;
+            var expected = SyntaxKind.MnemonicToken;
             var instruction = MatchToken(expected);
             var operands = ImmutableArray.CreateBuilder<ExpressionSyntax>();
-            if (Current.Kind != SyntaxKind.EndOfFileToken)
+            while (Current.Kind != SyntaxKind.EndOfFileToken)
             {
-                // Parse instruction operands;
+                // Parse instruction operands
+                operands.Add(ParseExpressionStatement());
             }
             return new IntelInstructionStatementSyntax(instruction, operands.ToImmutable());
+        }
+
+        private RegisterNameExpressionSyntax ParseRegisterName()
+        {
+            var registerToken = MatchToken(SyntaxKind.RegisterToken);
+            return new RegisterNameExpressionSyntax(registerToken);
+        }
+
+        private ExpressionSyntax ParseExpressionStatement()
+        {
+            switch (Current.Kind)
+            {
+                case SyntaxKind.RegisterToken:
+                    return ParseRegisterName();
+                default:
+                    throw new NotImplementedException();
+
+            }
         }
 
         private StatementSyntax ParseStatement()
         {
             switch (Current.Kind)
             {
-                case SyntaxKind.OpCodeToken:
-                    break;
+                case SyntaxKind.MnemonicToken:
+                    throw new NotImplementedException();
                 default:
-                    break;
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
-
         }
+
         private IntelSyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
@@ -93,7 +111,6 @@ namespace Basm.Architectures.X64.Parser.Intel
             }
 
             return new IntelSyntaxToken(kind, Current.Position, null, null);
-            
         }
     }
 }

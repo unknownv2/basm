@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Basm.Core.CodeAnalysis.Syntax
 {
-    public abstract  class ExpressionSyntax : SyntaxNode
+    public class ExpressionStatementSyntax : StatementSyntax
     {
-        public abstract SyntaxKind Kind { get; }
     }
 }

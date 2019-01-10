@@ -3,7 +3,7 @@ using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Basm.Assemblers.ScriptAssembler;
+using Basm.Scripting;
 using Basm.Core.CodeAnalysis.Binding;
 using Basm.Core.CodeAnalysis.Syntax;
 using Keystone;

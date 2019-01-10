@@ -1,4 +1,4 @@
-﻿using Basm.Assemblers.ScriptAssembler;
+﻿using Basm.Scripting;
 
 namespace Basm.Scripts.CheatEngine.Commands
 {

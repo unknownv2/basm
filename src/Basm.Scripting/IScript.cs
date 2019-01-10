@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Text;
 using Basm.Core.CodeAnalysis.Scripting;
 
-namespace Basm.Assemblers.ScriptAssembler
+namespace Basm.Scripting
 {
     public interface IScript : IScriptState
     {

@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Text;
 using Basm.Core.CodeAnalysis;
 
-namespace Basm.Assemblers.ScriptAssembler
+namespace Basm.Scripting
 {
     public sealed class Script : IScript
     {

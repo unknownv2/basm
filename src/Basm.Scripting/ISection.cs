@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Basm.Core.CodeAnalysis.Scripting;
 
-namespace Basm.Assemblers.ScriptAssembler
+namespace Basm.Scripting
 {
     public interface ISection
     {

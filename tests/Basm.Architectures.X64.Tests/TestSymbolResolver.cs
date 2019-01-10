@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Basm.Assemblers.ScriptAssembler;
+using Basm.Scripting;
 
 namespace Basm.Architectures.X64.Tests
 {

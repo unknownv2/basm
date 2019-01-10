@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Basm.Assemblers.Keystone\Basm.Assemblers.Keystone.csproj" />
-    <ProjectReference Include="..\Basm.Assemblers.ScriptAssembler\Basm.Assemblers.ScriptAssembler.csproj" />
     <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
+    <ProjectReference Include="..\Basm.Scripting\Basm.Scripting.csproj" />
   </ItemGroup>
 
 </Project>

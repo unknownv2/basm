@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using Basm.Core.CodeAnalysis;
 using Basm.Core.CodeAnalysis.Scripting;
 
-namespace Basm.Assemblers.ScriptAssembler
+namespace Basm.Scripting
 {
     /// <summary>
     /// A message defined by the assembler that executes a pre-defined function.

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Basm.Assemblers.ScriptAssembler
+namespace Basm.Scripting
 {
     public abstract class SymbolResolver
     {

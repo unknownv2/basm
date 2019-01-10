@@ -15,5 +15,10 @@ namespace Basm.Architectures.X64.Parser.Intel
         IdentifierToken,
         CommaToken,
         NumberToken,
+        SizeDirectiveToken,
+        OpenBracketToken,
+        CloseBracketToken,
+        
+
     }
 }

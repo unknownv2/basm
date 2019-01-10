@@ -95,9 +95,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                     return ParseRegisterName();
                 case SyntaxKind.NumberToken:
                     return ParseNumberLiteral();
+                case SyntaxKind.SizeDirectiveToken:
+                    return ParseMemoryPointerExpression();
                 default:
-                    throw new NotImplementedException();
-
+                    return ParseStatement();
             }
         }
 
@@ -113,15 +114,33 @@ namespace Basm.Architectures.X64.Parser.Intel
             return new LiteralExpressionSyntax(numberToken);
         }
 
-        private StatementSyntax ParseStatement()
+        private ExpressionSyntax ParseMemoryPointerExpression()
         {
-            switch (Current.Kind)
+            if (Peek(0).Kind == SyntaxKind.SizeDirectiveToken)
             {
-                case SyntaxKind.MnemonicToken:
-                    throw new NotImplementedException();
-                default:
-                    throw new NotImplementedException();
+                var sizeDirective = MatchToken(SyntaxKind.SizeDirectiveToken);
+                if (Current.Kind == SyntaxKind.IdentifierToken) // PTR
+                {
+                    MatchToken(SyntaxKind.IdentifierToken);
+                }
+
+                var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
+                var expression = ParseExpressionStatement();
+                var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
+                return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
             }
+
+            throw new InvalidOperationException("Attempting to read an invalid expression");
+        }
+
+        private ExpressionSyntax ParseStatement()
+        {
+            // The default pointer type is a DWORD PTR if no size is specified.
+            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, "DWORD", null);
+            var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
+            var expression = ParseExpressionStatement();
+            var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
+            return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
         }
 
         private IntelSyntaxToken MatchToken(SyntaxKind kind)

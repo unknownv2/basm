@@ -12,6 +12,8 @@ namespace Basm.Core.CodeAnalysis.Syntax
         WhitespaceToken,
         BinaryExpression,
         NameExpression,
-        LiteralExpression
+        LiteralExpression,
+        MemoryPointerExpression,
+        BracketedExpression
     }
 }

@@ -65,6 +65,14 @@ namespace Basm.Architectures.X64.Parser.Intel
                     _kind = SyntaxKind.CommaToken;
                     _position++;
                     break;
+                case '[':
+                    _kind = SyntaxKind.OpenBracketToken;
+                    _position++;
+                    break;
+                case ']':
+                    _kind = SyntaxKind.CloseBracketToken;
+                    _position++;
+                    break;
                 case 'a':
                 case 'b':
                 case 'c':
@@ -151,6 +159,11 @@ namespace Basm.Architectures.X64.Parser.Intel
             return new IntelSyntaxToken(_kind, _start, text, _value);
         }
 
+        private void ReadStatement()
+        {
+
+        }
+
         private void ReadNumericLiteral()
         {
             while (char.IsDigit(Current))
@@ -161,7 +174,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             var text = _text.ToString(_start, length);
             if (!int.TryParse(text, out var value))
             {
-                throw new InvalidDataException("Bad numeric literal");
+                throw new InvalidOperationException("Bad numeric literal");
             }
 
             _value = value;
@@ -189,9 +202,12 @@ namespace Basm.Architectures.X64.Parser.Intel
             {
                 _kind = SyntaxKind.RegisterToken;
             }
+            else if (IsSizeDirective(text))
+            {
+                _kind = SyntaxKind.SizeDirectiveToken;
+            }
             else
             {
-                
                 _kind = SyntaxKind.IdentifierToken;
             }
         }
@@ -234,6 +250,13 @@ namespace Basm.Architectures.X64.Parser.Intel
             "r13b", "r13w", "r13d", "r13",
             "r14b", "r14w", "r14d", "r14",
             "r15b", "r15w", "r15d", "r15",
+        };
+
+        private bool IsSizeDirective(string directive) => SizeDirective.Contains(directive.ToLower());
+
+        private static readonly HashSet<string> SizeDirective = new HashSet<string>
+        {
+            "byte", "word", "dword", "qword", "xmmword", "xmmword", "ymmword", "zmmword", "ptr"
         };
     }
 }

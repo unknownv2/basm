@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
@@ -142,7 +143,7 @@ namespace Basm.Architectures.X64.Parser.Intel
         private void ReadIdentifierOrKeyword()
         {
             string text = ScanIdentifier();
-            if (IsInstructionOpCode(text))
+            if (IsInstructionMnemonic(text))
             {
                 _kind = SyntaxKind.MnemonicToken;
             }
@@ -167,28 +168,34 @@ namespace Basm.Architectures.X64.Parser.Intel
             return _text.ToString(_start, length);
         }
 
-        private bool IsInstructionOpCode(string text)
-        {
-            switch (text.ToLower())
-            {
-                case "nop":
-                case "push":
-                    return true;
-                default:
-                    return false;
-            }
-        }
+        private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic);
 
-        private bool IsRegister(string text)
+        private static readonly HashSet<string> InstructionSet = new HashSet<string>
         {
-            switch (text.ToLower())
-            {
-                case "eax":
-                case "rax":
-                    return true;
-                default:
-                    return false;
-            }
-        }
+            "add", "aam", "aas", "adc", "add",
+            "nop", "push", "pop"
+        };
+
+        private bool IsRegister(string register) =>  RegisterSet.Contains(register);
+
+        private static readonly HashSet<string> RegisterSet = new HashSet<string>
+        {
+            "al", "ah", "ax", "eax", "rax",
+            "bl", "bh", "bx", "ebx", "rbx",
+            "cl", "ch", "cx", "ecx", "rcx",
+            "dl", "dh", "dx", "edx", "rdx",
+            "spl", "sp", "esp", "rsp",
+            "bpl", "bp", "ebp", "rbp",
+            "sil", "si", "esi", "rsi",
+            "dil", "di", "edi", "rdi",
+            "r8b", "r8w", "r8d", "r8",
+            "r9b", "r9w", "r9d", "r9",
+            "r10b", "r10w", "r10d", "r10",
+            "r11b", "r11w", "r11d", "r11",
+            "r12b", "r12w", "r12d", "r12",
+            "r13b", "r13w", "r13d", "r13",
+            "r14b", "r14w", "r14d", "r14",
+            "r15b", "r15w", "r15d", "r15",
+        };
     }
 }

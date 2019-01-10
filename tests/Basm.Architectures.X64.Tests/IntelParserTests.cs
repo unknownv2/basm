@@ -33,7 +33,23 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(mnemonic, instruction.InstructionToken.Text);
             Assert.Equal(operandCount, instruction.Operands.Length);
             Assert.Equal(operand1, ((RegisterNameExpressionSyntax)instruction.Operands[0]).IdentifierToken.Text);
+        }
 
+        [Fact]
+        public void ShouldParseInstructionWithOne32BitOperand()
+        {
+            const string mnemonic = "pop";
+            const string operand1 = "ecx";
+            string instructionText = $"{mnemonic} {operand1}";
+            const int operandCount = 1;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            Assert.Equal(operand1, ((RegisterNameExpressionSyntax)instruction.Operands[0]).IdentifierToken.Text);
         }
     }
 }

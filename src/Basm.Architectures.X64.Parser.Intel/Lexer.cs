@@ -65,6 +65,18 @@ namespace Basm.Architectures.X64.Parser.Intel
                     _kind = SyntaxKind.PlusToken;
                     _position++;
                     break;
+                case '-':
+                    _kind = SyntaxKind.MinusToken;
+                    _position++;
+                    break;
+                case '*':
+                    _kind = SyntaxKind.StarToken;
+                    _position++;
+                    break;
+                case '/':
+                    _kind = SyntaxKind.SlashToken;
+                    _position++;
+                    break;
                 case ',':
                     _kind = SyntaxKind.CommaToken;
                     _position++;
@@ -75,10 +87,6 @@ namespace Basm.Architectures.X64.Parser.Intel
                     break;
                 case ']':
                     _kind = SyntaxKind.CloseBracketToken;
-                    _position++;
-                    break;
-                case '/':
-                    _kind = SyntaxKind.SlashToken;
                     _position++;
                     break;
                 case 'a':

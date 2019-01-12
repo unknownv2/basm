@@ -142,6 +142,42 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
         }
 
+
+        [Theory]
+        [InlineData("+")]
+        [InlineData("-")]
+        [InlineData("*")]
+        [InlineData("/")]
+        public void ShouldParseInstructionBinaryExpressionWithRegisterAndSourceRegister(string expressionOperator)
+        {
+            const string mnemonic = "mov";
+            const string leftRegister = "rax";
+            const string pointerType = "BYTE";
+            const int rightImmediateValue = 2;
+            const string sourceRegister = "dl";
+
+            // mov BYTE [rax + 2], dl
+            string instructionText = $"{mnemonic} {pointerType} [{leftRegister} {expressionOperator} {rightImmediateValue}], {sourceRegister}";
+            const int operandCount = 2;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            Assert.Equal(pointerType, operand.Token());
+            var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
+            var binaryExpression = pointerExpression.As<BinaryExpressionSyntax>();
+            var left = binaryExpression.Left.As<RegisterNameExpressionSyntax>();
+            Assert.Equal(leftRegister, left.Token());
+            Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
+            var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
+            Assert.Equal(rightImmediateValue, right.Value);
+            var operand2 = instruction.Operand2<RegisterNameExpressionSyntax>();
+            Assert.Equal(sourceRegister, operand2.Token());
+        }
+
         [Fact]
         public void ShouldParseInstructionWithLiteralOperand()
         {
@@ -212,8 +248,9 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(rightImmediateValue, right.Value);
             Assert.Equal(rightImmediateValue, right.Value);
         }
+
         [Fact]
-        public void ShouldParseInstructionBinaryExpressionWithRegisterAndImmediateWithSpace()
+        public void ShouldParseInstructionWithArbitrarySpacing()
         {
             const string mnemonic = "push";
             const string leftRegister = "rax";
@@ -239,5 +276,6 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(rightImmediateValue, right.Value);
             Assert.Equal(rightImmediateValue, right.Value);
         }
+
     }
 }

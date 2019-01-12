@@ -75,7 +75,6 @@ namespace Basm.Architectures.X64.Parser.Intel
                     MatchToken(SyntaxKind.CommaToken);
                     continue;
                 }
-
                 // Parse instruction operands
                 operands.Add(ParseStatement());
             }

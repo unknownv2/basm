@@ -276,6 +276,5 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(rightImmediateValue, right.Value);
             Assert.Equal(rightImmediateValue, right.Value);
         }
-
     }
 }

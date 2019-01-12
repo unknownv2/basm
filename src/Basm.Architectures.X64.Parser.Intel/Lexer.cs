@@ -77,6 +77,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                     _kind = SyntaxKind.CloseBracketToken;
                     _position++;
                     break;
+                case '/':
+                    _kind = SyntaxKind.SlashToken;
+                    _position++;
+                    break;
                 case 'a':
                 case 'b':
                 case 'c':

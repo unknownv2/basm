@@ -6,7 +6,7 @@ namespace Basm.Core.CodeAnalysis.Syntax
 {
     public abstract class SyntaxToken : SyntaxNode
     {
-        public SyntaxToken(int position, string text, object value)
+        protected SyntaxToken(int position, string text, object value)
         {
             Position = position;
             Text = text;

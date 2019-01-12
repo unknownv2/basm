@@ -16,7 +16,7 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(instructionText, instruction.InstructionToken.Text);
+            Assert.Equal(instructionText, instruction.Token());
             Assert.Empty(instruction.Operands);
         }
 
@@ -32,10 +32,10 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-
-            Assert.Equal(operand1, ((RegisterNameExpressionSyntax)((ExpressionStatementSyntax)instruction.Operands[0]).Expression).IdentifierToken.Text);
+            var operand = instruction.Operand1<RegisterNameExpressionSyntax>();
+            Assert.Equal(operand1, operand.Token());
         }
 
         [Fact]
@@ -50,29 +50,32 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            Assert.Equal(operand1, ((RegisterNameExpressionSyntax)instruction.Operands[0]).IdentifierToken.Text);
+            var operand = instruction.Operand1<RegisterNameExpressionSyntax>();
+            Assert.Equal(operand1, operand.Token());
         }
 
         [Fact]
         public void ShouldParseInstructionWithTwoOperands()
         {
             const string mnemonic = "xor";
-            const string operand1 = "rax";
-            const string operand2 = "rcx";
+            const string operand1Text = "rax";
+            const string operand2Text = "rcx";
 
-            string instructionText = $"{mnemonic} {operand1}, {operand2}";
+            string instructionText = $"{mnemonic} {operand1Text}, {operand2Text}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            Assert.Equal(operand1, ((RegisterNameExpressionSyntax)instruction.Operands[0]).IdentifierToken.Text);
-            Assert.Equal(operand2, ((RegisterNameExpressionSyntax)instruction.Operands[1]).IdentifierToken.Text);
+            var operand1 = instruction.Operand1<RegisterNameExpressionSyntax>();
+            var operand2 = instruction.Operand2<RegisterNameExpressionSyntax>();
+            Assert.Equal(operand1Text, operand1.Token());
+            Assert.Equal(operand2Text, operand2.Token());
         }
 
         [Fact]
@@ -89,10 +92,11 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
             
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            Assert.Equal(pointerType, ((MemoryPointerExpressionSyntax) instruction.Operands[0]).PointerTypeToken.Text);
-            Assert.Equal(operandRegister, ((RegisterNameExpressionSyntax)((MemoryPointerExpressionSyntax)instruction.Operands[0]).Expression).IdentifierToken.Text);
+            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            Assert.Equal(pointerType, operand.Token());
+            Assert.Equal(operandRegister, operand.Expression.StatementAs<RegisterNameExpressionSyntax>().Token());
         }
 
         [Fact]
@@ -109,10 +113,11 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            Assert.Equal(pointerType, ((MemoryPointerExpressionSyntax)instruction.Operands[0]).PointerTypeToken.Text);
-            Assert.Equal(operandRegister, ((RegisterNameExpressionSyntax)((MemoryPointerExpressionSyntax)instruction.Operands[0]).Expression).IdentifierToken.Text);
+            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            Assert.Equal(pointerType, operand.Token());
+            Assert.Equal(operandRegister, operand.Expression.StatementAs<RegisterNameExpressionSyntax>().Token());
         }
 
         [Fact]
@@ -129,12 +134,12 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
             var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
-            Assert.Equal(pointerType, operand.PointerTypeToken.Text);
+            Assert.Equal(pointerType, operand.Token());
             var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
-            Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().IdentifierToken.Text);
+            Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
         }
 
         [Fact]
@@ -150,7 +155,7 @@ namespace Basm.Architectures.X64.Tests
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
             var operand = instruction.Operand1<LiteralExpressionSyntax>();
             Assert.Equal(operand1, operand.LiteralToken.Text);
@@ -161,22 +166,23 @@ namespace Basm.Architectures.X64.Tests
         public void ShouldParseInstructionWithRegisterAndLiteralOperands()
         {
             const string mnemonic = "mov";
-            const string operand1 = "rax";
-            const string operand2 = "2";
+            const string operand1Register = "rax";
+            const string operand2Literal = "2";
             const int operand2Value = 2;
 
-            string instructionText = $"{mnemonic} {operand1}, {operand2}";
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            Assert.Equal(operand1, (instruction.Operand1<RegisterNameExpressionSyntax>()).IdentifierToken.Text);
-            Assert.Equal(operand2, ((LiteralExpressionSyntax)instruction.Operands[1]).LiteralToken.Text);
-            Assert.Equal(operand2Value, ((LiteralExpressionSyntax)instruction.Operands[1]).Value);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
         }
 
         [Fact]
@@ -196,13 +202,15 @@ namespace Basm.Architectures.X64.Tests
             var instruction = root.InstructionStatement;
             var binaryExpression = instruction.Operand1<BinaryExpressionSyntax>();
 
-            Assert.Equal(mnemonic, instruction.InstructionToken.Text);
+            Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
 
-            Assert.Equal(leftRegister, (binaryExpression.Left as RegisterNameExpressionSyntax).IdentifierToken.Text);
+            var left = binaryExpression.Left.As<RegisterNameExpressionSyntax>();
+            Assert.Equal(leftRegister, left.Token());
             Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
-            Assert.Equal(rightImmediateValue, (binaryExpression.Right as LiteralExpressionSyntax).Value);
-            Assert.Equal(rightImmediateValue, (binaryExpression.Right as LiteralExpressionSyntax).Value);
+            var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
+            Assert.Equal(rightImmediateValue, right.Value);
+            Assert.Equal(rightImmediateValue, right.Value);
         }
     }
 }

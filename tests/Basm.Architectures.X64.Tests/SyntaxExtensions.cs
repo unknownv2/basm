@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Basm.Architectures.X64.Parser.Intel;
 using Basm.Core.CodeAnalysis.Syntax;
 using Xunit;
 
@@ -8,10 +9,32 @@ namespace Basm.Architectures.X64.Tests
 {
     internal static class SyntaxExtensions
     {
+        internal static T StatementAs<T>(this SyntaxNode node) where T : ExpressionSyntax
+        {
+            var expression = node.As<ExpressionStatementSyntax>().Expression;
+            return expression.As<T>();
+        }
+
         internal static T As<T>(this SyntaxNode expression) where T : ExpressionSyntax
         {
             Assert.IsType<T>(expression);
             return (T)expression;
+        }
+
+        internal static string Token(this NameExpressionSyntax expression)
+        {
+            Assert.NotNull(expression.IdentifierToken);
+            return expression.ToString();
+        }
+        internal static string Token(this InstructionStatementSyntax expression)
+        {
+            Assert.NotNull(expression.InstructionToken);
+            return expression.InstructionToken.Text;
+        }
+        internal static string Token(this MemoryPointerExpressionSyntax expression)
+        {
+            Assert.NotNull(expression.PointerTypeToken);
+            return expression.PointerTypeToken.Text;
         }
     }
 }

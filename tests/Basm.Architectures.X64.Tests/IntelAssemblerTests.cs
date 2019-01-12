@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Basm.Architectures.X64.Tests
 {
-    public class IntelAssemblerTest
+    public class IntelAssemblerTests
     {
         [Fact]
         public void ShouldAssembleNopInstructionToBuffer()

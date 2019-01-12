@@ -13,7 +13,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             PointerTypeToken = pointerTypeToken;
         }
 
-        public override Basm.Core.CodeAnalysis.Syntax.SyntaxKind Kind => Basm.Core.CodeAnalysis.Syntax.SyntaxKind.MemoryPointerExpression;
+        public override Core.CodeAnalysis.Syntax.SyntaxKind Kind => Core.CodeAnalysis.Syntax.SyntaxKind.MemoryPointerExpression;
         public SyntaxToken PointerTypeToken { get; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
 using System.Text;
+using Basm.Architectures.X64.Parser.Intel.Syntax;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
@@ -76,7 +77,7 @@ namespace Basm.Architectures.X64.Parser.Intel
                 }
 
                 // Parse instruction operands
-                operands.Add(ParseExpressionStatement());
+                operands.Add(ParseStatement());
             }
             return new IntelInstructionStatementSyntax(instruction, operands.ToImmutable());
         }
@@ -87,26 +88,15 @@ namespace Basm.Architectures.X64.Parser.Intel
             return new RegisterNameExpressionSyntax(registerToken);
         }
 
-        private ExpressionSyntax ParseExpressionStatement()
+        private ExpressionSyntax ParseStatement()
         {
             switch (Current.Kind)
             {
-                case SyntaxKind.RegisterToken:
-                    return ParseRegisterName();
-                case SyntaxKind.NumberToken:
-                    return ParseNumberLiteral();
-                case SyntaxKind.SizeDirectiveToken:
-                    return ParseMemoryPointerExpression();
                 default:
-                    return ParseStatement();
+                    return ParseExpressionStatement();
             }
         }
 
-        private ExpressionSyntax ParseNameExpression()
-        {
-            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
-            return new NameExpressionSyntax(identifierToken);
-        }
 
         private ExpressionSyntax ParseNumberLiteral()
         {
@@ -119,13 +109,13 @@ namespace Basm.Architectures.X64.Parser.Intel
             if (Peek(0).Kind == SyntaxKind.SizeDirectiveToken)
             {
                 var sizeDirective = MatchToken(SyntaxKind.SizeDirectiveToken);
-                if (Current.Kind == SyntaxKind.IdentifierToken) // PTR
+                if (Current.Kind == SyntaxKind.IdentifierToken) // Parse 'PTR', as in DWORD PTR
                 {
                     MatchToken(SyntaxKind.IdentifierToken);
                 }
 
                 var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
-                var expression = ParseExpressionStatement();
+                var expression = ParseStatement();
                 var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
                 return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
             }
@@ -133,14 +123,68 @@ namespace Basm.Architectures.X64.Parser.Intel
             throw new InvalidOperationException("Attempting to read an invalid expression");
         }
 
-        private ExpressionSyntax ParseStatement()
+        private ExpressionSyntax ParseBracketStatement()
         {
             // The default pointer type is a DWORD PTR if no size is specified.
             var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, "DWORD", null);
             var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
-            var expression = ParseExpressionStatement();
+            var expression = ParseStatement();
             var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
             return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
+        }
+
+        private ExpressionStatementSyntax ParseExpressionStatement()
+        {
+            var expression = ParseExpression();
+            return new ExpressionStatementSyntax(expression);
+        }
+
+        private ExpressionSyntax ParseExpression()
+        {
+            return ParseBinaryExpression();
+        }
+
+        private ExpressionSyntax ParseBinaryExpression(int parentPrecedence = 0)
+        {
+            ExpressionSyntax left = ParsePrimaryExpression();
+
+            while (true)
+            {
+                var precedence = Current.Kind.GetBinaryOperatorPrecedence();
+                if (precedence == 0 || precedence <= parentPrecedence)
+                {
+                    break;
+                }
+
+                var operatorToken = NextToken();
+                var right = ParseBinaryExpression(precedence);
+                left = new BinaryExpressionSyntax(left, operatorToken, right);
+            }
+
+            return left;
+        }
+
+        private ExpressionSyntax ParsePrimaryExpression()
+        {
+            switch (Current.Kind)
+            {
+                case SyntaxKind.RegisterToken:
+                    return ParseRegisterName();
+                case SyntaxKind.NumberToken:
+                    return ParseNumberLiteral();
+                case SyntaxKind.SizeDirectiveToken:
+                    return ParseMemoryPointerExpression();
+                case SyntaxKind.OpenBracketToken:
+                    return ParseBracketStatement();
+                default:
+                    return ParseNameExpression();
+            }
+        }
+
+        private ExpressionSyntax ParseNameExpression()
+        {
+            var identifierToken = MatchToken(SyntaxKind.IdentifierToken);
+            return new NameExpressionSyntax(identifierToken);
         }
 
         private IntelSyntaxToken MatchToken(SyntaxKind kind)

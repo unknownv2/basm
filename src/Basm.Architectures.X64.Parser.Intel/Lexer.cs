@@ -61,6 +61,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                 case InvalidCharacter:
                     _kind = SyntaxKind.EndOfFileToken;
                     break;
+                case '+':
+                    _kind = SyntaxKind.PlusToken;
+                    _position++;
+                    break;
                 case ',':
                     _kind = SyntaxKind.CommaToken;
                     _position++;

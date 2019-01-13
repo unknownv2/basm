@@ -55,7 +55,14 @@ namespace Basm.Architectures.X64.Tests
             {
                 return ResolveLiteral(literal);
             }
-
+            if (expression is BinaryExpressionSyntax binaryExpression)
+            {
+                return ResolveBinaryExpression(binaryExpression);
+            }
+            if (expression is MemoryPointerExpressionSyntax memoryPointer)
+            {
+                return ResolveMemoryPointerExpression(memoryPointer);
+            }
             return string.Empty;
         }
 

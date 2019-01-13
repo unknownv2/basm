@@ -235,7 +235,7 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private string ScanIdentifier()
         {
-            while (char.IsLetter(Current))
+            while (char.IsLetter(Current) || char.IsDigit(Current))
             {
                 _position++;
             }
@@ -266,6 +266,7 @@ namespace Basm.Architectures.X64.Parser.Intel
                 {
                     "rax", "rbx", "rcx", "rdx",
                     "rsp", "rbp", "rsi", "rdi",
+                    "r8b", "r8w", "r8d", "r8",
                     "r9b", "r9w", "r9d", "r9",
                     "r10b", "r10w", "r10d", "r10",
                     "r11b", "r11w", "r11d", "r11",

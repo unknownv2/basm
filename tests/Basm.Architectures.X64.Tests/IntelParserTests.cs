@@ -42,8 +42,8 @@ namespace Basm.Architectures.X64.Tests
         public void ShouldParseInstructionWithOne32BitOperand()
         {
             const string mnemonic = "pop";
-            const string operand1 = "ecx";
-            string instructionText = $"{mnemonic} {operand1}"; // pop ecx
+            const string operand1 = "rcx";
+            string instructionText = $"{mnemonic} {operand1}"; // pop rcx
             const int operandCount = 1;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -245,7 +245,7 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(leftRegister, left.Token());
             Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
             var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
-            Assert.Equal(rightImmediateValue, right.Value);
+            Assert.Equal(rightImmediateValue.ToString(), right.LiteralToken.Text);
             Assert.Equal(rightImmediateValue, right.Value);
         }
 
@@ -273,7 +273,7 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(leftRegister, left.Token());
             Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
             var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
-            Assert.Equal(rightImmediateValue, right.Value);
+            Assert.Equal(rightImmediateValue.ToString(), right.LiteralToken.Text);
             Assert.Equal(rightImmediateValue, right.Value);
         }
     }

@@ -13,7 +13,6 @@ namespace Basm.Core.CodeAnalysis.Syntax
 
         public override SyntaxKind Kind => SyntaxKind.NameExpression;
         public SyntaxToken IdentifierToken { get; }
-
         public override string ToString() => IdentifierToken.Text;
     }
 }

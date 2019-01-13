@@ -15,6 +15,17 @@ namespace Basm.Architectures.X64.Tests
             return expression.As<T>();
         }
 
+        internal static bool IsStatementType<T>(this SyntaxNode node) where T : ExpressionSyntax
+        {
+            var expression = node.AsUnchecked<ExpressionStatementSyntax>().Expression;
+            return (expression as T) != null;
+        }
+
+        internal static T AsUnchecked<T>(this SyntaxNode expression) where T : ExpressionSyntax
+        {
+            return (T)expression;
+        }
+
         internal static T As<T>(this SyntaxNode expression) where T : ExpressionSyntax
         {
             Assert.IsType<T>(expression);

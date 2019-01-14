@@ -230,7 +230,30 @@ namespace Basm.Architectures.X64.Tests
             const string operand2Literal = "2";
             const int operand2Value = 2;
             // mov rax, 2
-            string instructionText = $"{mnemonic}       {operand1Register},       {operand2Literal}"; 
+            string instructionText = $"  {mnemonic}       {operand1Register},       {operand2Literal}"; 
+            const int operandCount = 2;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
+        }
+
+        [Fact]
+        public void ShouldParseInstructionWithComment()
+        {
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "2";
+            const int operand2Value = 2;
+            // mov rax, 2
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal} ; This is a comment.";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);

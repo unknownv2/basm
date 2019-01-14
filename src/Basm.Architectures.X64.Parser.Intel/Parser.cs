@@ -23,7 +23,8 @@ namespace Basm.Architectures.X64.Parser.Intel
             do
             {
                 token = lexer.Lex();
-                if (token.Kind != SyntaxKind.WhitespaceToken)
+                if (token.Kind != SyntaxKind.WhitespaceToken
+                    && token.Kind != SyntaxKind.CommentToken)
                 {
                     tokens.Add(token);
                 }

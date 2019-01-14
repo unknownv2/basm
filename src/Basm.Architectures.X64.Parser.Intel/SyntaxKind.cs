@@ -18,7 +18,8 @@ namespace Basm.Architectures.X64.Parser.Intel
         SizeDirectiveToken,
         OpenBracketToken,
         CloseBracketToken,
-
+        SemicolonToken,
+        CommentToken,
         PlusToken,
         MinusToken,
         StarToken,

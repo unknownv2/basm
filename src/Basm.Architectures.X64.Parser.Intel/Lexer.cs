@@ -86,6 +86,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                     _kind = SyntaxKind.CommaToken;
                     _position++;
                     break;
+                case ';':
+                    _kind = SyntaxKind.CommentToken;
+                    ScanComment();
+                    break;
                 case '[':
                     _kind = SyntaxKind.OpenBracketToken;
                     _position++;
@@ -239,8 +243,17 @@ namespace Basm.Architectures.X64.Parser.Intel
             {
                 _position++;
             }
+
             var length = _position - _start;
             return _text.ToString(_start, length);
+        }
+
+        private void ScanComment()
+        {
+            while (Current != InvalidCharacter && Current != '\0')
+            {
+                _position++;
+            }
         }
 
         private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic.ToLower());

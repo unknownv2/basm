@@ -131,8 +131,7 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private ExpressionSyntax ParseBracketStatement()
         {
-            // The default pointer type is a DWORD PTR if no size is specified.
-            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, "DWORD", null);
+            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, "", null);
             var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
             var expression = ParseStatement();
             var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);

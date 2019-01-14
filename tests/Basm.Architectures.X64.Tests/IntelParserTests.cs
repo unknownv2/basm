@@ -79,7 +79,7 @@ namespace Basm.Architectures.X64.Tests
         }
 
         [Fact]
-        public void ShouldParseInstructionWithNoPointerSizeOperand()
+        public void ShouldParseInstructionWithQwordPointerSizeOperand()
         {
             const string mnemonic = "push";
             const string operandRegister = "rax";
@@ -101,12 +101,12 @@ namespace Basm.Architectures.X64.Tests
         }
 
         [Fact]
-        public void ShouldParseInstructionWithDwordPointerSizeOperand()
+        public void ShouldParseInstructionWithNoPointerSizeOperand()
         {
             const string mnemonic = "mov";
             const string operandRegister = "rax";
             string operand1 = $"[{operandRegister}]";
-            const string pointerType = "DWORD";
+            const string pointerType = "";
             const string sourceRegister = "ecx";
             string instructionText = $"{mnemonic} {operand1}, {sourceRegister}"; // mov [rax], ecx
             const int operandCount = 2;

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Basm.Architectures.Parser\Basm.Architectures.Parser.csproj" />
     <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
   </ItemGroup>
 

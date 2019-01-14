@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Basm.Architectures.Parser;
+using Basm.Core.CodeAnalysis.Syntax;
 
 namespace Basm.Architectures.X86.Parser.Intel
 {
-    public class Lexer
+    public class Lexer : IAssemblyLexer
     {
-        protected static HashSet<string> RegisterSet = new HashSet<string>
+        public HashSet<string> RegisterSet { get; } = new HashSet<string>
         {
             "al", "ah", "ax", "eax",
             "bl", "bh", "bx", "ebx",
@@ -31,6 +33,17 @@ namespace Basm.Architectures.X86.Parser.Intel
             "dr4", "dr5", "dr6", "dr7",
             "cs", "ds", "es", "fs", "gs",
             "ss",
+        };
+
+        public HashSet<string> InstructionSet { get; } = new HashSet<string>
+        {
+
+        };
+
+        public HashSet<string> SizeDirective { get; } = new HashSet<string>
+        {
+            "byte", "word", "dword", "qword", "xmmword",
+            "xmmword", "ymmword", "zmmword"
         };
     }
 }

@@ -245,22 +245,16 @@ namespace Basm.Architectures.X64.Parser.Intel
 
         private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic.ToLower());
 
-        private static readonly HashSet<string> InstructionSet = new HashSet<string>
-        {
-            "add", "aam", "aas", "adc", "add",
-            "mov", "nop", "push", "pop", "xor"
-        };
-
         private bool IsRegister(string register) =>  RegisterSet.Contains(register.ToLower());
 
         private bool IsSizeDirective(string directive) => SizeDirective.Contains(directive.ToLower());
 
         /// <summary>
-        /// Setup structures to extend the base x86 architecture.
+        /// Extend the base x86 architecture.
         /// </summary>
         private void Extend()
         {
-            // Extend the X86 register set
+            // Extend the base X86 register set.
             RegisterSet.UnionWith(
                 new HashSet<string>
                 {
@@ -300,11 +294,13 @@ namespace Basm.Architectures.X64.Parser.Intel
                     "cr12", "cr13", "cr14", "cr15",
                 }
             );
-        }
 
-        private static readonly HashSet<string> SizeDirective = new HashSet<string>
-        {
-            "byte", "word", "dword", "qword", "xmmword", "xmmword", "ymmword", "zmmword", "ptr"
-        };
+            // Extend the base x86 instruction set.
+            InstructionSet.UnionWith(new HashSet<string>
+            {
+                "add", "aam", "aas", "adc", "add",
+                "mov", "nop", "push", "pop", "xor"
+            });
+        }
     }
 }

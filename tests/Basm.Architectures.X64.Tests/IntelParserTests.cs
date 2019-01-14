@@ -84,9 +84,10 @@ namespace Basm.Architectures.X64.Tests
             const string mnemonic = "push";
             const string operandRegister = "rax";
             string operand1 = $"[{operandRegister}]";
-            string instructionText = $"{mnemonic} {operand1}"; // push [rax]
+            const string pointerType = "QWORD";
+            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}"; // push QWORD PTR [rax]
             const int operandCount = 1;
-            const string pointerType = "DWORD";
+
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
@@ -106,7 +107,7 @@ namespace Basm.Architectures.X64.Tests
             const string operandRegister = "rax";
             string operand1 = $"[{operandRegister}]";
             const string pointerType = "DWORD";
-            string instructionText = $"{mnemonic} {pointerType} {operand1}"; // push DWORD [rax]
+            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}"; // push DWORD [rax]
             const int operandCount = 1;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);

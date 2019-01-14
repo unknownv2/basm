@@ -6,6 +6,6 @@ namespace Basm.Core.CodeAnalysis.Syntax
 {
     public interface ILexer
     {
-        SyntaxToken Lex();
+        
     }
 }

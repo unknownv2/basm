@@ -223,59 +223,26 @@ namespace Basm.Architectures.X64.Tests
         }
 
         [Fact]
-        public void ShouldParseInstructionBinaryExpressionWithRegisterAndImmediate()
-        {
-            const string mnemonic = "push";
-            const string leftRegister = "rax";
-            const string expressionOperator = "+";
-            const int rightImmediateValue = 2;
-          
-            // Instruction: 'push rax+2'
-            string instructionText = $"{mnemonic} {leftRegister}{expressionOperator}{rightImmediateValue}"; 
-            const int operandCount = 1;
-
-            var syntaxTree = SyntaxTree.Parse(instructionText);
-            var root = syntaxTree.Root;
-            var instruction = root.InstructionStatement;
-            var binaryExpression = instruction.Operand1<BinaryExpressionSyntax>();
-
-            Assert.Equal(mnemonic, instruction.Token());
-            Assert.Equal(operandCount, instruction.Operands.Length);
-
-            var left = binaryExpression.Left.As<RegisterNameExpressionSyntax>();
-            Assert.Equal(leftRegister, left.Token());
-            Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
-            var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
-            Assert.Equal(rightImmediateValue.ToString(), right.LiteralToken.Text);
-            Assert.Equal(rightImmediateValue, right.Value);
-        }
-
-        [Fact]
         public void ShouldParseInstructionWithArbitrarySpacing()
         {
-            const string mnemonic = "push";
-            const string leftRegister = "rax";
-            const string expressionOperator = "+";
-            const int rightImmediateValue = 2;
-
-            // Instruction: 'push   rax   +   2'
-            string instructionText = $"{mnemonic}   {leftRegister}  {expressionOperator}   {rightImmediateValue}";
-            const int operandCount = 1;
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "2";
+            const int operand2Value = 2;
+            // mov rax, 2
+            string instructionText = $"{mnemonic}       {operand1Register},       {operand2Literal}"; 
+            const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
-            var binaryExpression = instruction.Operand1<BinaryExpressionSyntax>();
 
             Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-
-            var left = binaryExpression.Left.As<RegisterNameExpressionSyntax>();
-            Assert.Equal(leftRegister, left.Token());
-            Assert.Equal(expressionOperator, binaryExpression.OperatorToken.Text);
-            var right = binaryExpression.Right.As<LiteralExpressionSyntax>();
-            Assert.Equal(rightImmediateValue.ToString(), right.LiteralToken.Text);
-            Assert.Equal(rightImmediateValue, right.Value);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
         }
     }
 }

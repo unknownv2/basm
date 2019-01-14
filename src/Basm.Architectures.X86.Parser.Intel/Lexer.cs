@@ -45,5 +45,10 @@ namespace Basm.Architectures.X86.Parser.Intel
             "byte", "word", "dword", "qword", "xmmword",
             "xmmword", "ymmword", "zmmword"
         };
+
+        public HashSet<string> LiteralSuffixes = new HashSet<string>
+        {
+            "h", "b",
+        };
     }
 }

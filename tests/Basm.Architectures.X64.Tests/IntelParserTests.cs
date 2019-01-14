@@ -25,7 +25,8 @@ namespace Basm.Architectures.X64.Tests
         {
             const string mnemonic = "push";
             const string operand1 = "rax";
-            string instructionText = $"{mnemonic} {operand1}"; // push rax
+            // push rax
+            string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -43,7 +44,8 @@ namespace Basm.Architectures.X64.Tests
         {
             const string mnemonic = "pop";
             const string operand1 = "rcx";
-            string instructionText = $"{mnemonic} {operand1}"; // pop rcx
+            // pop rcx
+            string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -62,8 +64,8 @@ namespace Basm.Architectures.X64.Tests
             const string mnemonic = "xor";
             const string operand1Text = "rax";
             const string operand2Text = "rcx";
-
-            string instructionText = $"{mnemonic} {operand1Text}, {operand2Text}"; // xor rax, rcx
+            // xor rax, rcx
+            string instructionText = $"{mnemonic} {operand1Text}, {operand2Text}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -85,7 +87,8 @@ namespace Basm.Architectures.X64.Tests
             const string operandRegister = "rax";
             string operand1 = $"[{operandRegister}]";
             const string pointerType = "QWORD";
-            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}"; // push QWORD PTR [rax]
+            // push QWORD PTR [rax]
+            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}";
             const int operandCount = 1;
 
 
@@ -108,7 +111,8 @@ namespace Basm.Architectures.X64.Tests
             string operand1 = $"[{operandRegister}]";
             const string pointerType = "";
             const string sourceRegister = "ecx";
-            string instructionText = $"{mnemonic} {operand1}, {sourceRegister}"; // mov [rax], ecx
+            // mov [rax], ecx
+            string instructionText = $"{mnemonic} {operand1}, {sourceRegister}"; 
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -132,7 +136,8 @@ namespace Basm.Architectures.X64.Tests
             string operand1 = $"[{operandRegister}]";
             const string pointerType = "BYTE";
             const string sourceRegister = "dl";
-            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}, {sourceRegister}"; // mov BYTE [rax], dl
+            // mov BYTE [rax], dl
+            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}, {sourceRegister}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -190,7 +195,8 @@ namespace Basm.Architectures.X64.Tests
             const string mnemonic = "push";
             const string operand1 = "2";
             const int operand1Value = 2;
-            string instructionText = $"{mnemonic} {operand1}"; // push 2
+            // push 2
+            string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
@@ -211,8 +217,54 @@ namespace Basm.Architectures.X64.Tests
             const string operand1Register = "rax";
             const string operand2Literal = "2";
             const int operand2Value = 2;
+            // mov rax, 2
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
+            const int operandCount = 2;
 
-            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}"; // mov rax, 2
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
+        }
+
+        [Fact]
+        public void ShouldParseInstructionWithRegisterAndHexLiteralOperands()
+        {
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "22H";
+            const int operand2Value = 0x22;
+            // mov rax, 0x22
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
+            const int operandCount = 2;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
+        }
+
+        [Fact]
+        public void ShouldParseInstructionWithRegisterAndBinaryLiteralOperands()
+        {
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "100010b";
+            const int operand2Value = 0x22;
+            // mov rax, 100010b
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);

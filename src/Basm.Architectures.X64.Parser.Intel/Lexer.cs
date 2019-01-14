@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
@@ -197,12 +198,36 @@ namespace Basm.Architectures.X64.Parser.Intel
             }
             var length = _position - _start;
             var text = _text.ToString(_start, length);
-            if (!int.TryParse(text, out var value))
-            {
-                throw new InvalidOperationException("Bad numeric literal");
-            }
 
-            _value = value;
+            if (IsLiteralSuffix(Current.ToString()))
+            {
+                switch (Current)
+                {
+                    case 'h':
+                    case 'H':
+                        if (!int.TryParse(text, NumberStyles.HexNumber,
+                            CultureInfo.CurrentCulture, out var value))
+                        {
+                            throw new InvalidOperationException("Bad numeric hex literal");
+                        }
+                        _value = value;
+                        break;
+                    case 'b':
+                    case 'B':
+                        _value = Convert.ToInt32(text, 2);
+                        break;
+                }
+                _position++;
+            }
+            else
+            {
+                if (!int.TryParse(text, out var value))
+                {
+                    throw new InvalidOperationException("Bad numeric literal");
+                }
+                _value = value;
+            }
+   
             _kind = SyntaxKind.NumberToken;
         }
 
@@ -255,6 +280,8 @@ namespace Basm.Architectures.X64.Parser.Intel
                 _position++;
             }
         }
+
+        private bool IsLiteralSuffix(string suffix) => LiteralSuffixes.Contains(suffix.ToLower());
 
         private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic.ToLower());
 

@@ -103,33 +103,13 @@ namespace Basm.Architectures.X64.Tests
         [Fact]
         public void ShouldParseInstructionWithDwordPointerSizeOperand()
         {
-            const string mnemonic = "push";
+            const string mnemonic = "mov";
             const string operandRegister = "rax";
             string operand1 = $"[{operandRegister}]";
             const string pointerType = "DWORD";
-            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}"; // push DWORD [rax]
-            const int operandCount = 1;
-
-            var syntaxTree = SyntaxTree.Parse(instructionText);
-            var root = syntaxTree.Root;
-            var instruction = root.InstructionStatement;
-
-            Assert.Equal(mnemonic, instruction.Token());
-            Assert.Equal(operandCount, instruction.Operands.Length);
-            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
-            Assert.Equal(pointerType, operand.Token());
-            Assert.Equal(operandRegister, operand.Expression.StatementAs<RegisterNameExpressionSyntax>().Token());
-        }
-
-        [Fact]
-        public void ShouldParseInstructionWithBytePointerSizeOperand()
-        {
-            const string mnemonic = "push";
-            const string operandRegister = "rax";
-            string operand1 = $"[{operandRegister}]";
-            const string pointerType = "BYTE";
-            string instructionText = $"{mnemonic} {pointerType} {operand1}"; // push BYTE [rax]
-            const int operandCount = 1;
+            const string sourceRegister = "ecx";
+            string instructionText = $"{mnemonic} {operand1}, {sourceRegister}"; // mov [rax], ecx
+            const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
@@ -141,6 +121,31 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(pointerType, operand.Token());
             var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
             Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(sourceRegister, instruction.Operand2<RegisterNameExpressionSyntax>().Token());
+        }
+
+        [Fact]
+        public void ShouldParseInstructionWithBytePointerSizeOperand()
+        {
+            const string mnemonic = "mov";
+            const string operandRegister = "rax";
+            string operand1 = $"[{operandRegister}]";
+            const string pointerType = "BYTE";
+            const string sourceRegister = "dl";
+            string instructionText = $"{mnemonic} {pointerType} PTR {operand1}, {sourceRegister}"; // mov BYTE [rax], dl
+            const int operandCount = 2;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            Assert.Equal(pointerType, operand.Token());
+            var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
+            Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(sourceRegister, instruction.Operand2<RegisterNameExpressionSyntax>().Token());
         }
 
 

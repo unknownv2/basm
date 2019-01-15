@@ -338,8 +338,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             // Extend the base x86 instruction set.
             InstructionSet.UnionWith(new HashSet<string>
             {
-                "add", "aam", "aas", "adc", "add",
-                "mov", "nop", "push", "pop", "xor"
+               
             });
         }
     }

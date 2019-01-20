@@ -280,6 +280,29 @@ namespace Basm.Architectures.X64.Tests
         }
 
         [Fact]
+        public void ShouldParseInstructionWithRegisterAndOctalLiteralOperands()
+        {
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "1400o";
+            const int operand2Value = 768;
+            // mov rax, 1400o
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
+            const int operandCount = 2;
+
+            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+            var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+            Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
+            Assert.Equal(operand2Value, operand2.Value);
+        }
+
+        [Fact]
         public void ShouldParseInstructionWithArbitrarySpacing()
         {
             const string mnemonic = "mov";

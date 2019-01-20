@@ -37,7 +37,8 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         public HashSet<string> InstructionSet { get; } = new HashSet<string>
         {
-
+            "add", "aam", "aas", "adc",
+            "mov", "nop", "push", "pop", "xor"
         };
 
         public HashSet<string> SizeDirective { get; } = new HashSet<string>
@@ -48,7 +49,7 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         public HashSet<string> LiteralSuffixes = new HashSet<string>
         {
-            "h", "b",
+            "h", "b", "o"
         };
     }
 }

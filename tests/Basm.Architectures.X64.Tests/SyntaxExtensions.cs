@@ -37,11 +37,13 @@ namespace Basm.Architectures.X64.Tests
             Assert.NotNull(expression.IdentifierToken);
             return expression.ToString();
         }
+
         internal static string Token(this InstructionStatementSyntax expression)
         {
             Assert.NotNull(expression.InstructionToken);
             return expression.InstructionToken.Text;
         }
+
         internal static string Token(this MemoryPointerExpressionSyntax expression)
         {
             Assert.NotNull(expression.PointerTypeToken);

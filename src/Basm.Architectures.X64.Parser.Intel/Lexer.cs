@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
 namespace Basm.Architectures.X64.Parser.Intel
@@ -216,6 +214,10 @@ namespace Basm.Architectures.X64.Parser.Intel
                     case 'B':
                         _value = Convert.ToInt32(text, 2);
                         break;
+                    case 'o':
+                    case 'O':
+                        _value = Convert.ToInt32(text, 8);
+                        break;
                 }
                 _position++;
             }
@@ -338,8 +340,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             // Extend the base x86 instruction set.
             InstructionSet.UnionWith(new HashSet<string>
             {
-                "add", "aam", "aas", "adc", "add",
-                "mov", "nop", "push", "pop", "xor"
+
             });
         }
     }

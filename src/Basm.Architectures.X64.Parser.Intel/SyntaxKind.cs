@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Basm.Architectures.X64.Parser.Intel
+﻿namespace Basm.Architectures.X64.Parser.Intel
 {
     public enum SyntaxKind 
     {

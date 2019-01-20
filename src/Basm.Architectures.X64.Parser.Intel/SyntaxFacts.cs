@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basm.Architectures.X64.Parser.Intel.Syntax
+namespace Basm.Architectures.X64.Parser.Intel
 {
     public static class SyntaxFacts
     {
@@ -16,7 +16,6 @@ namespace Basm.Architectures.X64.Parser.Intel.Syntax
                 case SyntaxKind.MinusToken:
                 case SyntaxKind.PlusToken:
                     return 4;
-
                 default:
                     return 0;
             }

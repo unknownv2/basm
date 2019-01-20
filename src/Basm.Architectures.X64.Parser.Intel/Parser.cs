@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Runtime.InteropServices;
-using System.Text;
-using Basm.Architectures.X64.Parser.Intel.Syntax;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 

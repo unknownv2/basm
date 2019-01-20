@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Basm.Core.CodeAnalysis.Syntax;
-using Basm.Core.CodeAnalysis.Text;
+﻿using Basm.Core.CodeAnalysis.Text;
 
 namespace Basm.Architectures.X64.Parser.Intel
 {

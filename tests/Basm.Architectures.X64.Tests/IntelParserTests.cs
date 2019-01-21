@@ -153,12 +153,10 @@ namespace Basm.Architectures.X64.Tests
             Assert.Equal(sourceRegister, instruction.Operand2<RegisterNameExpressionSyntax>().Token());
         }
 
-
         [Theory]
         [InlineData("+")]
         [InlineData("-")]
         [InlineData("*")]
-        [InlineData("/")]
         public void ShouldParseInstructionBinaryExpressionWithRegisterAndSourceRegister(string expressionOperator)
         {
             const string mnemonic = "mov";
@@ -166,9 +164,8 @@ namespace Basm.Architectures.X64.Tests
             const string pointerType = "BYTE";
             const int rightImmediateValue = 2;
             const string sourceRegister = "dl";
-
-            // mov BYTE [rax + 2], dl
-            string instructionText = $"{mnemonic} {pointerType} [{leftRegister} {expressionOperator} {rightImmediateValue}], {sourceRegister}";
+            // mov BYTE [rax (+,-,*) 2], dl
+            string instructionText = $"{mnemonic} {pointerType} ptr [{leftRegister} {expressionOperator} {rightImmediateValue}], {sourceRegister}";
             const int operandCount = 2;
 
             var syntaxTree = SyntaxTree.Parse(instructionText);

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Basm.Architectures.Parser;
-using Basm.Core.CodeAnalysis.Syntax;
 
 namespace Basm.Architectures.X86.Parser.Intel
 {
@@ -32,13 +30,30 @@ namespace Basm.Architectures.X86.Parser.Intel
             "dr0", "dr1", "dr2", "dr3",
             "dr4", "dr5", "dr6", "dr7",
             "cs", "ds", "es", "fs", "gs",
-            "ss",
+            "ss"
         };
 
         public HashSet<string> InstructionSet { get; } = new HashSet<string>
         {
-            "add", "aam", "aas", "adc",
-            "mov", "nop", "push", "pop", "xor"
+            "add", "aam", "aas", "adc", "add", "and", "call",
+            "cbw", "clc", "cbw", "clc", "cli", "cmc",
+            "cmp", "cmpsb", "cmpsw", "cwd", "daa",
+            "das", "dec", "div", "esc", "hlt", "idiv",
+            "imul", "in", "inc", "int", "into", 
+            "iret", "ja", "jae", "jb", "jbe", "jc", "je", "jg", "jge",
+            "jl", "jle", "jna", "jnae", "jnb", "jnbe", "jnc", "jne",
+            "jng", "jnge", "jnl", "jnle", "jno", "jnp", "jns",
+            "jnz", "jo", "jp", "jpe", "jpo", "js", "jz",
+            "jcxz", "jmp", "lahf", "lds", "lea", "les",
+            "lock", "lodsb", "lodsw", "loop", "loope", "loopne",
+            "loopnz", "loopz", "mov", "movsb", "movsw", "mul",
+            "neg", "nop", "not", "or", "out", "pop", "popf", "push",
+            "pushf", "rcl", "rcr", "rep", "repe", "repne", "repnz",
+            "repz", "ret", "retn", "retf", "rol", "ror",
+            "sahf", "sal", "sar", "sbb", "scasb", "scasw",
+            "shl", "shr", "stc", "std", "sti", "stosb",
+            "stosw", "sub", "test", "wait", "xchg", 
+            "xlat", "xor"
         };
 
         public HashSet<string> SizeDirective { get; } = new HashSet<string>

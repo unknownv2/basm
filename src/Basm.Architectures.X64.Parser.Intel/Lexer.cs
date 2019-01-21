@@ -197,7 +197,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             var length = _position - _start;
             var text = _text.ToString(_start, length);
 
-            if (IsLiteralSuffix(Current.ToString()))
+            if (IsLiteralSuffix(Current))
             {
                 switch (Current)
                 {
@@ -283,7 +283,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             }
         }
 
-        private bool IsLiteralSuffix(string suffix) => LiteralSuffixes.Contains(suffix.ToLower());
+        private bool IsLiteralSuffix(char suffix) => LiteralSuffixes.Contains(char.ToLower(suffix));
 
         private bool IsInstructionMnemonic(string mnemonic) => InstructionSet.Contains(mnemonic.ToLower());
 

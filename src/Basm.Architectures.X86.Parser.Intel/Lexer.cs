@@ -118,9 +118,9 @@ namespace Basm.Architectures.X86.Parser.Intel
             "xmmword", "ymmword", "zmmword"
         };
 
-        public HashSet<string> LiteralSuffixes = new HashSet<string>
+        public HashSet<char> LiteralSuffixes = new HashSet<char>
         {
-            "h", "b", "o"
+            'h', 'b', 'o'
         };
     }
 }

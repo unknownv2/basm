@@ -340,7 +340,10 @@ namespace Basm.Architectures.X64.Parser.Intel
             // Extend the base x86 instruction set.
             InstructionSet.UnionWith(new HashSet<string>
             {
-
+                "cdqe", "cqo", "cmpsq", "cmpxchg16b",
+                "iretq", "jrcxz", "lodsq", "movsxd",
+                "popfq", "pushfq", "rdtscp", "scasq",
+                "stosq", "swapgs"
             });
         }
     }

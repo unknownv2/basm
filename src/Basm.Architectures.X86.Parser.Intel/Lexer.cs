@@ -35,6 +35,7 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         public HashSet<string> InstructionSet { get; } = new HashSet<string>
         {
+            // 8086/8088
             "add", "aam", "aas", "adc", "add", "and", "call",
             "cbw", "clc", "cbw", "clc", "cli", "cmc",
             "cmp", "cmpsb", "cmpsw", "cwd", "daa",
@@ -45,15 +46,70 @@ namespace Basm.Architectures.X86.Parser.Intel
             "jng", "jnge", "jnl", "jnle", "jno", "jnp", "jns",
             "jnz", "jo", "jp", "jpe", "jpo", "js", "jz",
             "jcxz", "jmp", "lahf", "lds", "lea", "les",
-            "lock", "lodsb", "lodsw", "loop", "loope", "loopne",
-            "loopnz", "loopz", "mov", "movsb", "movsw", "mul",
+            "lock", "lodsb", "lodsw",
+            "loop", "loope", "loopne","loopnz", "loopz",
+            "mov", "movsb", "movsw", "mul",
             "neg", "nop", "not", "or", "out", "pop", "popf", "push",
             "pushf", "rcl", "rcr", "rep", "repe", "repne", "repnz",
             "repz", "ret", "retn", "retf", "rol", "ror",
             "sahf", "sal", "sar", "sbb", "scasb", "scasw",
             "shl", "shr", "stc", "std", "sti", "stosb",
-            "stosw", "sub", "test", "wait", "xchg", 
-            "xlat", "xor"
+            "stosw", "sub", "test", "wait", "xchg",
+            "xlat", "xor",
+
+            // 80816/80188
+            "bound", "enter", "ins", "leave", "outs", "popa", "pusha",
+            
+            // 80286
+            "arpl", "clts", "lar", "lgdt", "lidt", "lldt",
+            "lmsw", "loadall", "lsl", "ltr", "sgdt",
+            "sigdt", "sidt", "sldt", "smsw",
+            "str", "verr", "verw",
+
+            // 80386
+            "bsf", "bsr", "bt", "btc", "btr", "bts",
+            "cdq", "cmpsd", "cwde", "ibts", "insd", "iret",
+            "jecxz", "lfs", "lgs", "lss", "lodsd",
+            "loopw", "loopwe", "loopwne","loopwnz", "loopwz",
+            "loopd", "loopde", "loopdne","loopdnz", "loopdz",
+            "movsd", "movsx", "movzx", "outsd",
+            "popad", "popfd", "pushad", "pushfd",
+            "scasd",
+            "seta", "setae", "setb", "setbe", "setc",
+            "sete", "setg", "setge", "setl", "setle", "setna",
+            "setnae", "setnb", "setnbe", "setnc", "setne",
+            "setng", "setnge", "setnl", "setnle", "setno",
+            "setnp", "setns", "setnz", "seto", "setp", "setpe",
+            "setpo", "sets", "setz",
+            "shld", "shrd", "stosd", "xbts",
+
+            // 80486
+            "bswap", "cmpxchg", "invd", "invlpg",
+            "wbinvd", "xadd",
+
+            // Pentium
+            "cpuid", "cmpxchg8b", "rdmsr", "rdtsc",
+            "wrmsr", "rsm", 
+
+            // pentium mmx
+            "rdpmc",
+
+            // AMD K6
+            "syscall", "sysret",
+            
+            // Pentium Pro
+            "cmova", "cmovae", "cmovb", "cmovbe",
+            "cmovc", "cmove", "cmovg", "cmovge",
+            "cmovl", "cmovle", "cmovna", "cmovnae",
+            "cmovnb", "cmovnbe", "cmovnc", "cmovne",
+            "cmovng", "cmovnge", "cmovnl", "cmovnle",
+            "cmovno", "cmovnp", "cmovns", "cmovnz",
+            "cmovo", "cmovp", "cmovpe", "cmovpo", "cmovs", "cmovz",
+            "ud2",
+
+            // Pentium II
+            "sysenter", "sysexit"
+            
         };
 
         public HashSet<string> SizeDirective { get; } = new HashSet<string>

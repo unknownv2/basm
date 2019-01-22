@@ -45,10 +45,10 @@ namespace Basm.Architectures.X64.Tests
         [InlineData("mov byte ptr [rax+rbx*4+9],r9b", new byte[] { 0x44, 0x88, 0x4c, 0x98, 0x09 })]
         [InlineData("mov byte ptr [r8+r10*4+9],r13b", new byte[] { 0x47, 0x88, 0x6c, 0x90, 0x09 })]
 
-        public void ShouldAssembleInstructionToBuffer(string instructionText, byte[] opcodeBytes)
+        public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {
             var memory = new TestMemory { Address = 0 };
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = SyntaxTree.Parse(inputText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
             var builder = new Sequence<byte>();
@@ -56,8 +56,8 @@ namespace Basm.Architectures.X64.Tests
             new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
             var instructionBuffer = builder.AsReadOnlySequence.ToArray();
 
-            Assert.Equal(opcodeBytes.Length, instructionBuffer.Length);
-            Assert.Equal(opcodeBytes, instructionBuffer);
+            Assert.Equal(expectedBytes.Length, instructionBuffer.Length);
+            Assert.Equal(expectedBytes, instructionBuffer);
         }
     }
 }

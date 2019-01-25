@@ -4,12 +4,20 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Nerdbank.Streams" Version="2.0.206" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Basm.Architectures.X86.Assembler\Basm.Architectures.X86.Assembler.csproj" />
+    <ProjectReference Include="..\..\src\Basm.Architectures.X86.Parser.Intel\Basm.Architectures.X86.Parser.Intel.csproj" />
   </ItemGroup>
 
 </Project>

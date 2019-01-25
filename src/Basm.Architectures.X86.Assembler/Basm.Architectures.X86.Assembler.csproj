@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basm.Assemblers.Keystone\Basm.Assemblers.Keystone.csproj" />
+    <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
+    <ProjectReference Include="..\Basm.Scripting\Basm.Scripting.csproj" />
+  </ItemGroup>
+
 </Project>

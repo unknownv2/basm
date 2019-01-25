@@ -6,7 +6,7 @@ using Basm.Core.CodeAnalysis.Text;
 
 namespace Basm.Architectures.X64.Parser.Intel
 {
-    public sealed class Parser
+    public class Parser
     {
         private readonly ImmutableArray<IntelSyntaxToken> _tokens;
         private readonly SourceText _text;

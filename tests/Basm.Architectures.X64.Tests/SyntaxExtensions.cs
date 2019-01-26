@@ -4,6 +4,7 @@ using System.Text;
 using Basm.Architectures.X64.Parser.Intel;
 using Basm.Core.CodeAnalysis.Syntax;
 using Xunit;
+using BracketedExpressionSyntax = Basm.Architectures.X64.Parser.Intel.BracketedExpressionSyntax;
 
 namespace Basm.Architectures.X64.Tests
 {
@@ -44,7 +45,7 @@ namespace Basm.Architectures.X64.Tests
             return expression.InstructionToken.Text;
         }
 
-        internal static string Token(this MemoryPointerExpressionSyntax expression)
+        internal static string Token(this BracketedExpressionSyntax expression)
         {
             Assert.NotNull(expression.PointerTypeToken);
             return expression.PointerTypeToken.Text;

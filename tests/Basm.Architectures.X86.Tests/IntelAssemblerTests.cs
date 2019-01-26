@@ -16,7 +16,7 @@ namespace Basm.Architectures.X86.Tests
             const byte nopOpcode = 0x90;
             const int nopOpCodeLength = 1;
             var memory = new TestMemory { Address = 0 };
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX86SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
             var builder = new Sequence<byte>();

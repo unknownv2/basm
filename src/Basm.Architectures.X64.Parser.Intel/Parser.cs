@@ -94,7 +94,6 @@ namespace Basm.Architectures.X64.Parser.Intel
             }
         }
 
-
         private ExpressionSyntax ParseNumberLiteral()
         {
             var numberToken = MatchToken(SyntaxKind.NumberToken);
@@ -120,7 +119,7 @@ namespace Basm.Architectures.X64.Parser.Intel
                 var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
                 var expression = ParseStatement();
                 var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
-                return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
+                return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
             }
 
             throw new InvalidOperationException("Attempting to read an invalid expression");
@@ -132,7 +131,7 @@ namespace Basm.Architectures.X64.Parser.Intel
             var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
             var expression = ParseStatement();
             var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
-            return new MemoryPointerExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
+            return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()

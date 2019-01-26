@@ -13,10 +13,9 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         public Parser(SourceText text)
         {
-
             _text = text;
-   
         }
+
         public IntelCompilationUnitSyntax ParseCompilationUnit()
         {
             throw new NotImplementedException();

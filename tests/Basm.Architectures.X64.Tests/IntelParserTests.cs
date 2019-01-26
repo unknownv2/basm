@@ -2,6 +2,7 @@ using Basm.Architectures.X64.Parser.Intel;
 using Basm.Architectures.X64.Tests;
 using Basm.Core.CodeAnalysis.Syntax;
 using Xunit;
+using BracketedExpressionSyntax = Basm.Architectures.X64.Parser.Intel.BracketedExpressionSyntax;
 
 namespace Basm.Architectures.X64.Tests
 {
@@ -12,7 +13,7 @@ namespace Basm.Architectures.X64.Tests
         {
             const string instructionText = "NOP";
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -29,7 +30,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -48,7 +49,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -68,7 +69,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Text}, {operand2Text}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -92,13 +93,13 @@ namespace Basm.Architectures.X64.Tests
             const int operandCount = 1;
 
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
             
             Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            var operand = instruction.Operand1<BracketedExpressionSyntax>();
             Assert.Equal(pointerType, operand.Token());
             Assert.Equal(operandRegister, operand.Expression.StatementAs<RegisterNameExpressionSyntax>().Token());
         }
@@ -115,13 +116,13 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1}, {sourceRegister}"; 
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
             Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            var operand = instruction.Operand1<BracketedExpressionSyntax>();
             Assert.Equal(pointerType, operand.Token());
             var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
             Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
@@ -140,13 +141,13 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {pointerType} PTR {operand1}, {sourceRegister}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
             Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            var operand = instruction.Operand1<BracketedExpressionSyntax>();
             Assert.Equal(pointerType, operand.Token());
             var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
             Assert.Equal(operandRegister, pointerExpression.As<RegisterNameExpressionSyntax>().Token());
@@ -168,12 +169,12 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {pointerType} ptr [{leftRegister} {expressionOperator} {rightImmediateValue}], {sourceRegister}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
             Assert.Equal(mnemonic, instruction.Token());
             Assert.Equal(operandCount, instruction.Operands.Length);
-            var operand = instruction.Operand1<MemoryPointerExpressionSyntax>();
+            var operand = instruction.Operand1<BracketedExpressionSyntax>();
             Assert.Equal(pointerType, operand.Token());
             var pointerExpression = operand.Expression.As<ExpressionStatementSyntax>().Expression;
             var binaryExpression = pointerExpression.As<BinaryExpressionSyntax>();
@@ -196,7 +197,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1}";
             const int operandCount = 1;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -218,7 +219,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -241,7 +242,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -264,7 +265,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -287,7 +288,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -310,7 +311,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"  {mnemonic}       {operand1Register},       {operand2Literal}"; 
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 
@@ -333,7 +334,7 @@ namespace Basm.Architectures.X64.Tests
             string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal} ; This is a comment.";
             const int operandCount = 2;
 
-            var syntaxTree = SyntaxTree.Parse(instructionText);
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
             var instruction = root.InstructionStatement;
 

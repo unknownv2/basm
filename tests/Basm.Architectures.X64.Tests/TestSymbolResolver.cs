@@ -5,6 +5,7 @@ using Basm.Architectures.X64.Parser.Intel;
 using Basm.Architectures.X64.Tests;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Scripting;
+using BracketedExpressionSyntax = Basm.Architectures.X64.Parser.Intel.BracketedExpressionSyntax;
 
 namespace Basm.Architectures.X64.Tests
 {
@@ -38,9 +39,9 @@ namespace Basm.Architectures.X64.Tests
             {
                 return ResolveBinaryExpression(statement.StatementAs<BinaryExpressionSyntax>());
             }
-            if (statement.IsStatementType<MemoryPointerExpressionSyntax>())
+            if (statement.IsStatementType<BracketedExpressionSyntax>())
             {
-                return ResolveMemoryPointerExpression(statement.StatementAs<MemoryPointerExpressionSyntax>());
+                return ResolveMemoryPointerExpression(statement.StatementAs<BracketedExpressionSyntax>());
             }
             return string.Empty;
         }
@@ -59,7 +60,7 @@ namespace Basm.Architectures.X64.Tests
             {
                 return ResolveBinaryExpression(binaryExpression);
             }
-            if (expression is MemoryPointerExpressionSyntax memoryPointer)
+            if (expression is BracketedExpressionSyntax memoryPointer)
             {
                 return ResolveMemoryPointerExpression(memoryPointer);
             }
@@ -84,7 +85,7 @@ namespace Basm.Architectures.X64.Tests
             return $"{left} {expression.OperatorToken.Text} {right}";
         }
 
-        private string ResolveMemoryPointerExpression(MemoryPointerExpressionSyntax expression)
+        private string ResolveMemoryPointerExpression(BracketedExpressionSyntax expression)
         {
             var innerExpression = ResolveSymbol(expression.Expression.As<ExpressionStatementSyntax>());
 

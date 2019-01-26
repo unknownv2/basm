@@ -5,9 +5,9 @@ using Basm.Core.CodeAnalysis.Syntax;
 
 namespace Basm.Architectures.X64.Parser.Intel
 {
-    public class MemoryPointerExpressionSyntax : BracketedExpressionSyntax
+    public class BracketedExpressionSyntax : Core.CodeAnalysis.Syntax.BracketedExpressionSyntax
     {
-        public MemoryPointerExpressionSyntax(SyntaxToken pointerTypeToken, SyntaxToken openBracketToken, ExpressionSyntax expression, SyntaxToken closeBracketToken)
+        public BracketedExpressionSyntax(SyntaxToken pointerTypeToken, SyntaxToken openBracketToken, ExpressionSyntax expression, SyntaxToken closeBracketToken)
             : base(openBracketToken, expression, closeBracketToken)
         {
             PointerTypeToken = pointerTypeToken;

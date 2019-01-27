@@ -1,4 +1,4 @@
-﻿namespace Basm.Architectures.X64.Parser.Intel
+﻿namespace Basm.Architectures.X86.Parser.Intel
 {
     public enum SyntaxKind 
     {

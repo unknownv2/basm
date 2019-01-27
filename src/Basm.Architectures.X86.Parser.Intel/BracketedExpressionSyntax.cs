@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Basm.Core.CodeAnalysis.Syntax;
 
-namespace Basm.Architectures.X64.Parser.Intel
+namespace Basm.Architectures.X86.Parser.Intel
 {
     public class BracketedExpressionSyntax : Core.CodeAnalysis.Syntax.BracketedExpressionSyntax
     {

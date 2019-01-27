@@ -1,8 +1,9 @@
 using Basm.Architectures.X64.Parser.Intel;
 using Basm.Architectures.X64.Tests;
+using Basm.Architectures.X86.Parser.Intel;
 using Basm.Core.CodeAnalysis.Syntax;
 using Xunit;
-using BracketedExpressionSyntax = Basm.Architectures.X64.Parser.Intel.BracketedExpressionSyntax;
+using BracketedExpressionSyntax = Basm.Architectures.X86.Parser.Intel.BracketedExpressionSyntax;
 
 namespace Basm.Architectures.X64.Tests
 {

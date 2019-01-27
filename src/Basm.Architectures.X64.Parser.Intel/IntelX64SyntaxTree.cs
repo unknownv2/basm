@@ -1,4 +1,5 @@
-﻿using Basm.Core.CodeAnalysis.Syntax;
+﻿using Basm.Architectures.Parser;
+using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
 
 namespace Basm.Architectures.X64.Parser.Intel

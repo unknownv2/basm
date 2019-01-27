@@ -5,7 +5,7 @@ using Basm.Scripting;
 
 namespace Basm.Scripts.CheatEngine
 {
-    public class CheatEngineExpressionResolver : SymbolResolver
+    public class CheatEngineSymbolResolver : SymbolResolver
     {
         public override string ResolveSymbol(object symbol)
         {

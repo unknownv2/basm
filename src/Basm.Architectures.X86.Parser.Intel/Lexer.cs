@@ -18,7 +18,6 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         public Lexer()
         {
-     
         }
 
         public Lexer(SourceText text) : this()

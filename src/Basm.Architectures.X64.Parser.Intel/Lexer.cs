@@ -5,11 +5,6 @@ namespace Basm.Architectures.X64.Parser.Intel
 {
     public class Lexer : X86.Parser.Intel.Lexer
     {
-        public Lexer()
-        {
-            Extend();
-        }
-
         public Lexer(SourceText text) : base(text)
         {
             Extend();

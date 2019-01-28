@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Basm.Architectures.Parser;
 using Basm.Core.CodeAnalysis.Syntax;
 using Basm.Core.CodeAnalysis.Text;
-using System.Collections.Generic;
 using System.Collections.Immutable;
+
 namespace Basm.Architectures.X86.Parser.Intel
 {
     public class Parser

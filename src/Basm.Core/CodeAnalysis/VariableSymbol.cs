@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Basm.Core.CodeAnalysis
 {
-    public sealed class VariableSymbol
+    public class VariableSymbol
     {
     }
 }

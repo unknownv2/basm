@@ -1,10 +1,7 @@
-﻿using System;
-using System.Buffers;
-using System.IO;
+﻿using System.Buffers;
 using System.Linq;
 using System.Text;
 using Basm.Scripting;
-using Basm.Core.CodeAnalysis.Binding;
 using Basm.Core.CodeAnalysis.Syntax;
 using Keystone;
 
@@ -21,9 +18,8 @@ namespace Basm.Architectures.X86.Assembler
 
         public object Emit(IBufferWriter<byte> stream, InstructionStatementSyntax instruction, SymbolResolver resolver)
         {
-            var data = Assemble(instruction, resolver);
-            stream.Write(data);
-            return null;
+            stream.Write(Assemble(instruction, resolver));
+            return stream;
         }
 
         private string ConvertInstructionToString(InstructionStatementSyntax instruction, SymbolResolver resolver)
@@ -32,8 +28,8 @@ namespace Basm.Architectures.X86.Assembler
             instructionBuilder.Append(instruction.InstructionToken.Text);
             if (instruction.Operands.Any())
             {
-                instructionBuilder.Append(" ");
                 int operandIndex = 0;
+                instructionBuilder.Append(" ");
                 foreach (var operand in instruction.Operands)
                 {
                     instructionBuilder.Append(resolver.ResolveSymbol(operand));
@@ -56,9 +52,9 @@ namespace Basm.Architectures.X86.Assembler
         {
             using (var assembler = new Engine(Architecture.X86, Mode.X32))
             {
-                var instructionString = ConvertInstructionToString(instruction, resolver);
+                var instructionText = ConvertInstructionToString(instruction, resolver);
 
-                var encoded = assembler.Assemble(instructionString, _memory.Address);
+                var encoded = assembler.Assemble(instructionText, _memory.Address);
 
                 return encoded.Buffer;
             }

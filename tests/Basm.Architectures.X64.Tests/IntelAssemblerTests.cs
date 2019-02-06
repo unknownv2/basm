@@ -8,27 +8,8 @@ namespace Basm.Architectures.X64.Tests
 {
     public class IntelAssemblerTests
     {
-        [Fact]
-        public void ShouldAssembleNopInstructionToBuffer()
-        {
-            const string instructionText = "nop";
-            const byte nopOpcode = 0x90;
-            var memory = new TestMemory { Address = 0 };
-            var builder = new Sequence<byte>();
-
-            var instruction = IntelX64SyntaxTree.Parse(instructionText).Root.InstructionStatement;
-
-            Assert.Equal(instructionText, instruction.InstructionToken.Text);
-            Assert.Empty(instruction.Operands);
-
-            new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
-            var instructionBuffer = builder.AsReadOnlySequence.ToArray();
-
-            Assert.Single(instructionBuffer);
-            Assert.Equal(nopOpcode, instructionBuffer[0]);
-        }
-
         [Theory]
+        [InlineData("nop", new byte[] { 0x90 })]
         [InlineData("push 2", new byte[] { 0x6a, 0x02 })]
         [InlineData("push rax", new byte[] { 0x50 })]
         [InlineData("mov rax, 1", new byte[] { 0x48, 0xc7, 0xc0, 0x01, 0x00, 0x00, 0x00 })]
@@ -46,15 +27,16 @@ namespace Basm.Architectures.X64.Tests
         public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {
             var memory = new TestMemory { Address = 0 };
-            var builder = new Sequence<byte>();
-
             var instruction = IntelX64SyntaxTree.Parse(inputText).Root.InstructionStatement;
+            Assert.NotNull(instruction);
+            using (var builder = new Sequence<byte>())
+            {
+                new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
+                var instructionBuffer = builder.AsReadOnlySequence.ToArray();
 
-            new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
-            var instructionBuffer = builder.AsReadOnlySequence.ToArray();
-
-            Assert.Equal(expectedBytes.Length, instructionBuffer.Length);
-            Assert.Equal(expectedBytes, instructionBuffer);
+                Assert.Equal(expectedBytes.Length, instructionBuffer.Length);
+                Assert.Equal(expectedBytes, instructionBuffer);
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Basm.Scripting
         }
 
         /// <summary>
-        /// Add a directive to the list of defined directives. 
+        /// Add a directive to the list of defined directives.
         /// </summary>
         /// <param name="directive"></param>
         /// <returns></returns>

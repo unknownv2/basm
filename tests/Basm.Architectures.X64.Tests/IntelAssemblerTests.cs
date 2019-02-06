@@ -11,14 +11,12 @@ namespace Basm.Architectures.X64.Tests
         [Fact]
         public void ShouldAssembleNopInstructionToBuffer()
         {
-            const string instructionText = "NOP";
+            const string instructionText = "nop";
             const byte nopOpcode = 0x90;
-            const int nopOpCodeLength = 1;
-            var memory = new TestMemory {Address = 0};
-            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
-            var root = syntaxTree.Root;
-            var instruction = root.InstructionStatement;
+            var memory = new TestMemory { Address = 0 };
             var builder = new Sequence<byte>();
+
+            var instruction = IntelX64SyntaxTree.Parse(instructionText).Root.InstructionStatement;
 
             Assert.Equal(instructionText, instruction.InstructionToken.Text);
             Assert.Empty(instruction.Operands);
@@ -26,7 +24,7 @@ namespace Basm.Architectures.X64.Tests
             new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
             var instructionBuffer = builder.AsReadOnlySequence.ToArray();
 
-            Assert.Equal(nopOpCodeLength, instructionBuffer.Length);
+            Assert.Single(instructionBuffer);
             Assert.Equal(nopOpcode, instructionBuffer[0]);
         }
 
@@ -48,10 +46,9 @@ namespace Basm.Architectures.X64.Tests
         public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {
             var memory = new TestMemory { Address = 0 };
-            var syntaxTree = IntelX64SyntaxTree.Parse(inputText);
-            var root = syntaxTree.Root;
-            var instruction = root.InstructionStatement;
             var builder = new Sequence<byte>();
+
+            var instruction = IntelX64SyntaxTree.Parse(inputText).Root.InstructionStatement;
 
             new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
             var instructionBuffer = builder.AsReadOnlySequence.ToArray();

@@ -13,7 +13,7 @@ namespace Basm.Architectures.X64.Parser.Intel
         /// <summary>
         /// Extend the base x86 architecture.
         /// </summary>
-        public void Extend()
+        private void Extend()
         {
             // Extend the base X86 register set.
             RegisterSet.UnionWith(

@@ -19,6 +19,6 @@ namespace Basm.Scripting
         /// such as script symbols or variables.</param>
         /// <param name="arguments">The arguments given to the command being evaluated.</param>
         /// <returns>The result of executing the script command.</returns>
-        EvaluationResult Evaluate(ScriptState state, ImmutableList<object> arguments);
+        EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> arguments);
     }
 }

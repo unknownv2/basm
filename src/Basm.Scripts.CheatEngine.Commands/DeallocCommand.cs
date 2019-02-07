@@ -9,7 +9,7 @@ namespace Basm.Scripts.CheatEngine.Commands
 {
     public sealed class DeallocCommand : ICommand
     {
-        public EvaluationResult Evaluate(ScriptState state, ImmutableList<object> arguments)
+        public EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> arguments)
         {
             throw new NotImplementedException();
         }

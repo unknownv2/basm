@@ -132,7 +132,7 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         private ExpressionSyntax ParseBracketStatement()
         {
-            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, "", null);
+            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, string.Empty, null);
             var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
             var expression = ParseStatement();
             var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);

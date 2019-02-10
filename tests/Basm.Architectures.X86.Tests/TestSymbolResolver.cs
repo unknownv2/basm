@@ -37,7 +37,7 @@ namespace Basm.Architectures.X86.Tests
             }
             if (statement.IsStatementType<BracketedExpressionSyntax>())
             {
-                return ResolveMemoryPointerExpression(statement.StatementAs<BracketedExpressionSyntax>());
+                return ResolveBracketedExpression(statement.StatementAs<BracketedExpressionSyntax>());
             }
             return string.Empty;
         }
@@ -58,7 +58,7 @@ namespace Basm.Architectures.X86.Tests
             }
             if (expression is BracketedExpressionSyntax memoryPointer)
             {
-                return ResolveMemoryPointerExpression(memoryPointer);
+                return ResolveBracketedExpression(memoryPointer);
             }
             return string.Empty;
         }
@@ -81,11 +81,12 @@ namespace Basm.Architectures.X86.Tests
             return $"{left} {expression.OperatorToken.Text} {right}";
         }
 
-        private string ResolveMemoryPointerExpression(BracketedExpressionSyntax expression)
+        private string ResolveBracketedExpression(BracketedExpressionSyntax expression)
         {
             var innerExpression = ResolveSymbol(expression.Expression.As<ExpressionStatementSyntax>());
-
-            return $"{expression.PointerTypeToken.Text} ptr [{innerExpression}]";
+            // Instructions like 'LEA" might not have a pointer type, so only add the type information if necessary.
+            var operandType = expression.PointerTypeToken.Text == string.Empty ? string.Empty : "ptr";
+            return $"{expression.PointerTypeToken.Text} {operandType} [{innerExpression}]";
         }
     }
 }

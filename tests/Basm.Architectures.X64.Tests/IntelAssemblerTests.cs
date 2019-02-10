@@ -23,12 +23,14 @@ namespace Basm.Architectures.X64.Tests
         [InlineData("mov byte ptr [rax+rbx*4+9],8", new byte[] { 0xc6, 0x44, 0x98, 0x09, 0x08 })]
         [InlineData("mov byte ptr [rax+rbx*4+9],r9b", new byte[] { 0x44, 0x88, 0x4c, 0x98, 0x09 })]
         [InlineData("mov byte ptr [r8+r10*4+9],r13b", new byte[] { 0x47, 0x88, 0x6c, 0x90, 0x09 })]
-
+        [InlineData("lea rsi, [rbx + 8*rax+4]", new byte[] { 0x48, 0x8d, 0x74, 0xc3, 0x04})]
         public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {
             var memory = new TestMemory { Address = 0 };
+
             var instruction = IntelX64SyntaxTree.Parse(inputText).Root.InstructionStatement;
             Assert.NotNull(instruction);
+
             using (var builder = new Sequence<byte>())
             {
                 new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());

@@ -13,7 +13,6 @@ namespace Basm.Core.CodeAnalysis.Syntax
         BinaryExpression,
         NameExpression,
         LiteralExpression,
-        MemoryPointerExpression,
         BracketedExpression,
         ExpressionStatement
     }

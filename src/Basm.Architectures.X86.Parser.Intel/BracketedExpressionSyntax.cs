@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Basm.Core.CodeAnalysis.Syntax;
+﻿using Basm.Core.CodeAnalysis.Syntax;
 
 namespace Basm.Architectures.X86.Parser.Intel
 {
@@ -13,7 +10,6 @@ namespace Basm.Architectures.X86.Parser.Intel
             PointerTypeToken = pointerTypeToken;
         }
 
-        public override Core.CodeAnalysis.Syntax.SyntaxKind Kind => Core.CodeAnalysis.Syntax.SyntaxKind.MemoryPointerExpression;
         public SyntaxToken PointerTypeToken { get; }
     }
 }

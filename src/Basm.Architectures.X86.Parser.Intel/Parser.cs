@@ -115,12 +115,6 @@ namespace Basm.Architectures.X86.Parser.Intel
                     MatchToken(SyntaxKind.IdentifierToken);
                 }
 
-                /*
-                if (Current.Kind == SyntaxKind.SizeDirectiveToken)
-                {
-                    MatchToken(SyntaxKind.SizeDirectiveToken);
-                }*/
-
                 var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
                 var expression = ParseStatement();
                 var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);

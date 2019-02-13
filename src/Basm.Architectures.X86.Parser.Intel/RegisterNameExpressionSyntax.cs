@@ -11,7 +11,5 @@ namespace Basm.Architectures.X86.Parser.Intel
         {
 
         }
-
-        public override string ToString() => base.ToString();
     }
 }

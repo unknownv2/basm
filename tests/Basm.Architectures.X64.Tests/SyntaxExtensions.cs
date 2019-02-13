@@ -45,7 +45,7 @@ namespace Basm.Architectures.X64.Tests
             return expression.InstructionToken.Text;
         }
 
-        internal static string Token(this BracketedExpressionSyntax expression)
+        internal static string PointerTypeToken(this BracketedExpressionSyntax expression)
         {
             Assert.NotNull(expression.PointerTypeToken);
             return expression.PointerTypeToken.Text;

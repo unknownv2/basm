@@ -11,7 +11,7 @@ namespace Basm.Architectures.X64.Tests
         [Fact]
         public void ShouldParseInstructionWithZeroOperands()
         {
-            const string instructionText = "NOP";
+            const string instructionText = "nop";
 
             var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
             var root = syntaxTree.Root;
@@ -283,6 +283,31 @@ namespace Basm.Architectures.X64.Tests
             var operand2 = instruction.Operand2<LiteralExpressionSyntax>();
             Assert.Equal(operand2Literal, operand2.LiteralToken.Text);
             Assert.Equal(operand2Value, operand2.Value);
+        }
+
+        [Fact]
+        public void ShouldParseInstructionWithCorrectBinaryPrecedence()
+        {
+            const string mnemonic = "mov";
+            const string operand1Register = "rax";
+            const string operand2Literal = "2*4+8";
+            // mov rax, 2*4+8
+            string instructionText = $"{mnemonic} {operand1Register}, {operand2Literal}";
+            const int operandCount = 2;
+
+            var syntaxTree = IntelX64SyntaxTree.Parse(instructionText);
+            var root = syntaxTree.Root;
+            var instruction = root.InstructionStatement;
+            Assert.Equal(mnemonic, instruction.Token());
+            Assert.Equal(operandCount, instruction.Operands.Length);
+
+            Assert.Equal(operand1Register, instruction.Operand1<RegisterNameExpressionSyntax>().Token());
+
+            var operand2 = instruction.Operand2<BinaryExpressionSyntax>();
+            Assert.Equal("+", operand2.OperatorToken.Text);
+            Assert.Equal(2, operand2.Left.As<BinaryExpressionSyntax>().Left.As<LiteralExpressionSyntax>().Value);
+            Assert.Equal(4, operand2.Left.As<BinaryExpressionSyntax>().Right.As<LiteralExpressionSyntax>().Value);
+            Assert.Equal(8, operand2.Right.As<LiteralExpressionSyntax>().Value);
         }
     }
 }

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basm.Assemblers.Engines.Keystone\Basm.Assemblers.Engines.Keystone.csproj" />
+    <ProjectReference Include="..\Basm.Core.Memory\Basm.Core.Memory.csproj" />
+    <ProjectReference Include="..\Basm.Core\Basm.Core.csproj" />
+    <ProjectReference Include="..\Basm.Scripting\Basm.Scripting.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Basm.Architectures.X86.Assembler;
+using Basm.Core.Memory;
 
 namespace Basm.Architectures.X86.Tests
 {

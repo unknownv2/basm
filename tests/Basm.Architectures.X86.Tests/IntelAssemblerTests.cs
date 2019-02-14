@@ -1,6 +1,7 @@
 using System.Buffers;
-using Basm.Architectures.X86.Assembler;
+using Basm.Assemblers.KeystoneAssembler;
 using Basm.Architectures.X86.Parser.Intel;
+using Basm.Core.Memory;
 using Nerdbank.Streams;
 using Xunit;
 
@@ -25,19 +26,23 @@ namespace Basm.Architectures.X86.Tests
         [InlineData("lea eax, [eax*4 + eax]", new byte[] { 0x8d, 0x04, 0x80 })]
         public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {
-            var memory = new TestMemory { Address = 0 };
+            var assembler = CreateAssembler(new TestMemory { Address = 0 });
 
             var instruction = IntelX86SyntaxTree.Parse(inputText).Root.InstructionStatement;
             Assert.NotNull(instruction);
 
             using (var builder = new Sequence<byte>())
             {
-                new KeystoneAssembler(memory).Emit(builder, instruction, new TestSymbolResolver());
+                assembler.Emit(builder, instruction, new TestSymbolResolver());
                 var instructionBuffer = builder.AsReadOnlySequence.ToArray();
 
                 Assert.Equal(expectedBytes.Length, instructionBuffer.Length);
                 Assert.Equal(expectedBytes, instructionBuffer);
             }
+        }
+        private static KeystoneAssembler CreateAssembler(IMemory memory)
+        {
+            return new KeystoneAssembler(Keystone.Architecture.X86, Keystone.Mode.X32, memory);
         }
     }
 }

@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Basm.Architectures.X64.Assembler\Basm.Architectures.X64.Assembler.csproj" />
     <ProjectReference Include="..\..\src\Basm.Architectures.X64.Parser.Intel\Basm.Architectures.X64.Parser.Intel.csproj" />
+    <ProjectReference Include="..\..\src\Basm.Assemblers.KeystoneAssembler\Basm.Assemblers.KeystoneAssembler.csproj" />
   </ItemGroup>
 
 </Project>

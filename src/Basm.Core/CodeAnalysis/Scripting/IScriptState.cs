@@ -6,6 +6,6 @@ namespace Basm.Core.CodeAnalysis.Scripting
 {
     public interface IScriptState
     {
-        VariableSymbols Variables { get; }
+        VariableSymbols Symbols { get; }
     }
 }

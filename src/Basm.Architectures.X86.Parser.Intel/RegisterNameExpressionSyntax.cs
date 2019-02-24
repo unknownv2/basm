@@ -9,7 +9,6 @@ namespace Basm.Architectures.X86.Parser.Intel
     {
         public RegisterNameExpressionSyntax(SyntaxToken registerNameToken) : base(registerNameToken)
         {
-
         }
     }
 }

@@ -8,12 +8,11 @@ namespace Basm.Scripting
 {
     public sealed class Script : IScript
     {
-        public VariableSymbols Variables { get; }
+        public VariableSymbols Symbols { get; }
         public ImmutableList<IScript> Sections { get; } = ImmutableList.Create<IScript>();
 
         public Script()
         {
-            Sections.AddRange(new List<IScript>());
         }
     }
 }

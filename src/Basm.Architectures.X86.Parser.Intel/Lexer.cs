@@ -377,7 +377,7 @@ namespace Basm.Architectures.X86.Parser.Intel
             "cpuid", "cmpxchg8b", "rdmsr", "rdtsc",
             "wrmsr", "rsm", 
 
-            // pentium mmx
+            // Pentium mmx
             "rdpmc",
 
             // AMD K6

@@ -11,7 +11,6 @@ namespace Basm.Architectures.X86.Parser.Intel
         public IntelInstructionStatementSyntax(IntelSyntaxToken instructionToken, ImmutableArray<ExpressionSyntax> operands) 
             : base(instructionToken, operands)
         {
-
         }
     }
 }

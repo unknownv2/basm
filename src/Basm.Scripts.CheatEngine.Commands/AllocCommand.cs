@@ -7,7 +7,7 @@ namespace Basm.Scripts.CheatEngine.Commands
 {
     public sealed class AllocCommand : ICommand
     {
-        public EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> arguments)
+        public EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> parameters)
         {
             throw new NotImplementedException();
         }

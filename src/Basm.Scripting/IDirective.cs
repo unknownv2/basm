@@ -17,8 +17,8 @@ namespace Basm.Scripting
         /// </summary>
         /// <param name="state">The global script state, providing access to properties
         /// such as script symbols or variables.</param>
-        /// <param name="arguments">The arguments given to the command being evaluated.</param>
+        /// <param name="parameters">The parameters required by the directive.</param>
         /// <returns>The result of executing the script command.</returns>
-        EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> arguments);
+        EvaluationResult Evaluate(ScriptState state, ImmutableArray<object> parameters);
     }
 }

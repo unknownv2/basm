@@ -15,7 +15,7 @@ namespace Basm.Architectures.X64.Parser.Intel
         /// </summary>
         private void Extend()
         {
-            // Extend the base X86 register set.
+            // Extend the base x86 register set.
             RegisterSet.UnionWith(
                 new HashSet<string>
                 {

@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Basm.Architectures.X86.Tests
 {
-    public class InterlAssemblerTests
+    public class IntelAssemblerTests
     {
         [Theory]
         [InlineData("nop", new byte[] { 0x90 })]

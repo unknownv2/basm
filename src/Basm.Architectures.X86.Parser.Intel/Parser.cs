@@ -72,13 +72,13 @@ namespace Basm.Architectures.X86.Parser.Intel
             var operands = ImmutableArray.CreateBuilder<ExpressionSyntax>();
             while (Current.Kind != SyntaxKind.EndOfFileToken)
             {
-                // Skip commas since they separate the operands
+                // Skip commas since they separate the operands.
                 if (Current.Kind == SyntaxKind.CommaToken)
                 {
                     MatchToken(SyntaxKind.CommaToken);
                     continue;
                 }
-                // Parse instruction operands
+                // Parse instruction operands.
                 operands.Add(ParseStatement());
             }
             return new IntelInstructionStatementSyntax(instruction, operands.ToImmutable());
@@ -107,10 +107,11 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         private ExpressionSyntax ParseMemoryPointerExpression()
         {
-            if (Peek(0).Kind == SyntaxKind.SizeDirectiveToken)
+            if (Current.Kind == SyntaxKind.SizeDirectiveToken)
             {
                 var sizeDirective = MatchToken(SyntaxKind.SizeDirectiveToken);
-                if (Current.Kind == SyntaxKind.IdentifierToken) // Parse 'PTR', as in DWORD PTR
+                // Parse 'PTR', as in DWORD PTR.
+                if (Current.Kind == SyntaxKind.IdentifierToken)
                 {
                     MatchToken(SyntaxKind.IdentifierToken);
                 }
@@ -193,7 +194,6 @@ namespace Basm.Architectures.X86.Parser.Intel
             {
                 return NextToken();
             }
-
             return new IntelSyntaxToken(kind, Current.Position, null, null);
         }
     }

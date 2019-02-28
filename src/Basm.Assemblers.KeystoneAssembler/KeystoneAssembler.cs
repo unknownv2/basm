@@ -21,7 +21,7 @@ namespace Basm.Assemblers.KeystoneAssembler
             _memory = memory;
         }
 
-        public object Emit(IBufferWriter<byte> stream, InstructionStatementSyntax instruction, SymbolResolver resolver)
+        public IBufferWriter<byte> Emit(IBufferWriter<byte> stream, InstructionStatementSyntax instruction, SymbolResolver resolver)
         {
             stream.Write(Assemble(instruction, resolver));
             return stream;
@@ -58,9 +58,7 @@ namespace Basm.Assemblers.KeystoneAssembler
             using (var assembler = new Engine(_architecture, _mode))
             {
                 var instructionText = ConvertInstructionToString(instruction, resolver);
-
                 var encoded = assembler.Assemble(instructionText, _memory.Address);
-
                 return encoded.Buffer;
             }
         }

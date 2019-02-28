@@ -289,7 +289,7 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         private bool IsRegister(string register) => RegisterSet.Contains(register.ToLower());
 
-        private bool IsSizeDirective(string directive) => SizeDirective.Contains(directive.ToLower());
+        private bool IsSizeDirective(string directive) => SizeDirectives.Contains(directive.ToLower());
 
         public HashSet<string> RegisterSet { get; } = new HashSet<string>
         {
@@ -398,7 +398,7 @@ namespace Basm.Architectures.X86.Parser.Intel
             
         };
 
-        public HashSet<string> SizeDirective { get; } = new HashSet<string>
+        public HashSet<string> SizeDirectives { get; } = new HashSet<string>
         {
             "byte", "word", "dword", "qword", "xmmword",
             "xmmword", "ymmword", "zmmword"

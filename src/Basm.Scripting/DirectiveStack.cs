@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Basm.Scripting
 {
@@ -16,8 +15,8 @@ namespace Basm.Scripting
         /// <summary>
         /// Add a directive to the list of defined directives.
         /// </summary>
-        /// <param name="directive"></param>
-        /// <returns></returns>
+        /// <param name="directive">The directive to add.</param>
+        /// <returns>The current directive stack including the new directive.</returns>
         public DirectiveStack Add(IDirective directive)
         {
             throw new NotImplementedException();

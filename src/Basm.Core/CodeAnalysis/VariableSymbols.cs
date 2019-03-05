@@ -6,6 +6,5 @@ namespace Basm.Core.CodeAnalysis
 {
     public class VariableSymbols : Dictionary<VariableSymbol, object>
     {
-
     }
 }

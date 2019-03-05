@@ -22,7 +22,9 @@ namespace Basm.Architectures.X86.Tests
         [InlineData("mov byte ptr [eax+ebx*4+9],8", new byte[] { 0xc6, 0x44, 0x98, 0x09, 0x08 })]
         [InlineData("mov byte ptr [eax+ebx*4+9],cl", new byte[] { 0x88, 0x4c, 0x98, 0x09 })]
         [InlineData("mov byte ptr [edx+ecx*4+9],bl", new byte[] {  0x88, 0x5c, 0x8a, 0x09 })]
-        [InlineData("lea esi, [ebx +eax*8+4]", new byte[] { 0x8d, 0x74, 0xc3, 0x04 })]
+        [InlineData("lea esi, [ebx+eax*8+4]", new byte[] { 0x8d, 0x74, 0xc3, 0x04 })]
+        [InlineData("lea esi, [ebx+eax*8+4+4]", new byte[] { 0x8d, 0x74, 0xc3, 0x08 })]
+        [InlineData("lea esi, [ebx+eax*8+4*2]", new byte[] { 0x8d, 0x74, 0xc3, 0x08 })]
         [InlineData("lea eax, [eax*4 + eax]", new byte[] { 0x8d, 0x04, 0x80 })]
         public void ShouldAssembleInstructionToBuffer(string inputText, byte[] expectedBytes)
         {

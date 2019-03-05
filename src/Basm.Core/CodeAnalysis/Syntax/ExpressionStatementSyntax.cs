@@ -12,7 +12,6 @@ namespace Basm.Core.CodeAnalysis.Syntax
         }
 
         public override SyntaxKind Kind => SyntaxKind.ExpressionStatement;
-
         public ExpressionSyntax Expression { get; }
     }
 }

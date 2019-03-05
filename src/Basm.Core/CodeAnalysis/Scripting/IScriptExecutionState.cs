@@ -6,6 +6,5 @@ namespace Basm.Core.CodeAnalysis.Scripting
 {
     public interface IScriptExecutionState
     {
-
     }
 }

@@ -8,7 +8,6 @@ namespace Basm.Core.CodeAnalysis.Text
     {
         protected StringText(string text) : base(text)
         {
-
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Basm.Core.CodeAnalysis.Syntax
             InstructionToken = instructionToken;
             Operands = operands;
         }
+
         public SyntaxToken InstructionToken { get; }
         public ImmutableArray<ExpressionSyntax> Operands { get; set; }
     }

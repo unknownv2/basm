@@ -19,4 +19,14 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Scripts\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Basm.Scripts.CheatEngine\Basm.Scripts.CheatEngine.csproj" />
+  </ItemGroup>
+
 </Project>

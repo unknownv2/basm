@@ -75,11 +75,14 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
                     _position++;
                     break;
                 case '/':
-                    _kind = SyntaxKind.SlashToken;
-                    _position++;
+                    ScanSlash();
                     break;
                 case ',':
                     _kind = SyntaxKind.CommaToken;
+                    _position++;
+                    break;
+                case ':':
+                    _kind = SyntaxKind.ColonToken;
                     _position++;
                     break;
                 case ';':
@@ -88,6 +91,10 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
                     break;
                 case '[':
                     _kind = SyntaxKind.OpenBracketToken;
+                    _position++;
+                    break;
+                case '"':
+                    _kind = SyntaxKind.QuoteToken;
                     _position++;
                     break;
                 case ']':
@@ -180,11 +187,6 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             return new CheatEngineSyntaxToken(_kind, _start, text, _value);
         }
 
-        private void ReadStatement()
-        {
-
-        }
-
         private void ReadNumericLiteral()
         {
             while (char.IsDigit(Current))
@@ -215,15 +217,20 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
 
         private void ReadIdentifierOrKeyword()
         {
-            string text = ScanIdentifier();
-  
-            _kind = SyntaxKind.IdentifierToken;
-            
+            var text = ScanIdentifier();
+            if (IsDirective(text))
+            {
+                _kind = SyntaxKind.DirectiveToken;
+            }
+            else
+            {
+                _kind = SyntaxKind.IdentifierToken;
+            }
         }
 
         private string ScanIdentifier()
         {
-            while (char.IsLetter(Current) || char.IsDigit(Current))
+            while (char.IsLetterOrDigit(Current) || Current == '.')
             {
                 _position++;
             }
@@ -232,12 +239,44 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             return _text.ToString(_start, length);
         }
 
-        private void ScanComment()
+        private void ScanSlash()
         {
-            while (Current != InvalidCharacter && Current != '\0')
+            if (Peek(1) == '/')
             {
+                ScanComment();
+            }
+            else
+            {
+                _kind = SyntaxKind.SlashToken;
                 _position++;
             }
         }
+
+        private void ScanComment()
+        {
+            while (Current != InvalidCharacter &&
+                   Current != '\0' &&
+                   Current != '\r' &&
+                   Current != '\n')
+            {
+                _position++;
+            }
+
+            _kind = SyntaxKind.CommentToken;
+        }
+
+        private bool IsDirective(string token) => Directives.Contains(token);
+
+        public HashSet<string> Directives { get; } = new HashSet<string>
+        {
+            "alloc",
+            "aobscanmodule",
+            "dealloc",
+            "loadlibrary",
+            "readmem",
+            "registersymbol",
+            "unregistersymbol"
+
+        };
     }
 }

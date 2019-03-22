@@ -60,9 +60,9 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
 
         public CheatEngineCompilationUnitSyntax ParseCompilationUnit()
         {
-            var script = ParseScript();
+            var section = ParseScriptSection();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new CheatEngineCompilationUnitSyntax(script, endOfFileToken);
+            return new CheatEngineCompilationUnitSyntax(section, endOfFileToken);
         }
 
         private CheatEngineSyntaxToken MatchToken(SyntaxKind kind)
@@ -71,14 +71,40 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             {
                 return NextToken();
             }
-
             return new CheatEngineSyntaxToken(kind, Current.Position, null, null);
         }
 
-        private StatementSyntax ParseScript()
+
+        private ExpressionStatementSyntax ParseExpressionStatement()
         {
-            throw new NotImplementedException();
-            
+            var expression = ParseExpression();
+            return new ExpressionStatementSyntax(expression);
+        }
+
+        private ExpressionSyntax ParseExpression()
+        {
+            return ParsePrimaryExpression();
+        }
+
+        private ExpressionSyntax ParsePrimaryExpression()
+        {
+            switch (Current.Kind)
+            {
+                default:
+                    return ParseExpressionStatement();
+            }
+        }
+
+        private SectionStatementSyntax ParseScriptSection()
+        {
+            MatchToken(SyntaxKind.OpenBracketToken);
+            var section = MatchToken(SyntaxKind.IdentifierToken);
+            var scriptCode = ImmutableArray.CreateBuilder<ExpressionSyntax>();
+            while (Current.Kind != SyntaxKind.EndOfFileToken)
+            {
+
+            }
+            return new SectionStatementSyntax(section, scriptCode.ToImmutable());
         }
     }
 }

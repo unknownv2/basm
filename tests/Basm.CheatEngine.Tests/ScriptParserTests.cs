@@ -7,10 +7,18 @@ namespace Basm.CheatEngine.Tests
     public class ScriptParserTests
     {
         [Fact]
-        public void TestParseScriptSection()
+        public void ShouldParseScriptSectionName()
         {
-            var script = CheatEngineSyntaxTree.Parse(TestResources.GetScriptText("Script1")).Root.ScriptStatement;
+            var section = ParseSection("Script1");
 
+            Assert.Equal("ENABLE", section.SectionName.Text);
+        }
+
+        private static SectionStatementSyntax ParseSection(string scriptName)
+        {
+            var section = CheatEngineSyntaxTree.Parse(TestResources.GetScriptText(scriptName)).Root.SectionStatement;
+            Assert.NotNull(section);
+            return section;
         }
     }
 }

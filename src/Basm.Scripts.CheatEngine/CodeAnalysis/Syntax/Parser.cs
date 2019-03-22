@@ -100,9 +100,11 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             MatchToken(SyntaxKind.OpenBracketToken);
             var section = MatchToken(SyntaxKind.IdentifierToken);
             var scriptCode = ImmutableArray.CreateBuilder<ExpressionSyntax>();
-            while (Current.Kind != SyntaxKind.EndOfFileToken)
+            while (Current.Kind != SyntaxKind.OpenBracketToken && 
+                   Current.Kind != SyntaxKind.EndOfFileToken)
             {
-
+                // Keep parsing tokens until end of section or end of file.
+                NextToken();
             }
             return new SectionStatementSyntax(section, scriptCode.ToImmutable());
         }

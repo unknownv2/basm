@@ -4,13 +4,13 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
 {
     public class CheatEngineCompilationUnitSyntax : CompilationUnitSyntax
     {
-        public CheatEngineCompilationUnitSyntax(StatementSyntax scriptStatement, SyntaxToken endOfFileToken)
+        public CheatEngineCompilationUnitSyntax(SectionStatementSyntax sectionStatement, SyntaxToken endOfFileToken)
         {
-            ScriptStatement = scriptStatement;
+            SectionStatement = sectionStatement;
             EndOfFileToken = endOfFileToken;
         }
 
         public SyntaxToken EndOfFileToken { get; }
-        public StatementSyntax ScriptStatement { get; }
+        public SectionStatementSyntax SectionStatement { get; }
     }
 }

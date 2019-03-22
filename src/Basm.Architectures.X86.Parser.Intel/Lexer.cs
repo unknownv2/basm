@@ -266,7 +266,7 @@ namespace Basm.Architectures.X86.Parser.Intel
 
         private string ScanIdentifier()
         {
-            while (char.IsLetter(Current) || char.IsDigit(Current))
+            while (char.IsLetterOrDigit(Current))
             {
                 _position++;
             }

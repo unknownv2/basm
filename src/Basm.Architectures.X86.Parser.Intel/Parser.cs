@@ -84,12 +84,6 @@ namespace Basm.Architectures.X86.Parser.Intel
             return new IntelInstructionStatementSyntax(instruction, operands.ToImmutable());
         }
 
-        private RegisterNameExpressionSyntax ParseRegisterName()
-        {
-            var registerToken = MatchToken(SyntaxKind.RegisterToken);
-            return new RegisterNameExpressionSyntax(registerToken);
-        }
-
         private ExpressionSyntax ParseStatement()
         {
             switch (Current.Kind)
@@ -97,41 +91,6 @@ namespace Basm.Architectures.X86.Parser.Intel
                 default:
                     return ParseExpressionStatement();
             }
-        }
-
-        private ExpressionSyntax ParseNumberLiteral()
-        {
-            var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(numberToken);
-        }
-
-        private ExpressionSyntax ParseMemoryPointerExpression()
-        {
-            if (Current.Kind == SyntaxKind.SizeDirectiveToken)
-            {
-                var sizeDirective = MatchToken(SyntaxKind.SizeDirectiveToken);
-                // Parse 'PTR', as in DWORD PTR.
-                if (Current.Kind == SyntaxKind.IdentifierToken)
-                {
-                    MatchToken(SyntaxKind.IdentifierToken);
-                }
-
-                var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
-                var expression = ParseStatement();
-                var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
-                return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
-            }
-
-            throw new InvalidOperationException("Attempting to read an invalid expression");
-        }
-
-        private ExpressionSyntax ParseBracketStatement()
-        {
-            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, string.Empty, null);
-            var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
-            var expression = ParseStatement();
-            var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
-            return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()
@@ -176,10 +135,51 @@ namespace Basm.Architectures.X86.Parser.Intel
                 case SyntaxKind.SizeDirectiveToken:
                     return ParseMemoryPointerExpression();
                 case SyntaxKind.OpenBracketToken:
-                    return ParseBracketStatement();
+                    return ParseBracketExpression();
                 default:
                     return ParseNameExpression();
             }
+        }
+
+        private RegisterNameExpressionSyntax ParseRegisterName()
+        {
+            var registerToken = MatchToken(SyntaxKind.RegisterToken);
+            return new RegisterNameExpressionSyntax(registerToken);
+        }
+
+        private ExpressionSyntax ParseNumberLiteral()
+        {
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(numberToken);
+        }
+
+        private ExpressionSyntax ParseMemoryPointerExpression()
+        {
+            if (Current.Kind == SyntaxKind.SizeDirectiveToken)
+            {
+                var sizeDirective = MatchToken(SyntaxKind.SizeDirectiveToken);
+                // Parse 'PTR', as in DWORD PTR.
+                if (Current.Kind == SyntaxKind.IdentifierToken)
+                {
+                    MatchToken(SyntaxKind.IdentifierToken);
+                }
+
+                var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
+                var expression = ParseStatement();
+                var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
+                return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
+            }
+
+            throw new InvalidOperationException("Attempting to read an invalid expression");
+        }
+
+        private ExpressionSyntax ParseBracketExpression()
+        {
+            var sizeDirective = new IntelSyntaxToken(SyntaxKind.SizeDirectiveToken, 0, string.Empty, null);
+            var openBracket = MatchToken(SyntaxKind.OpenBracketToken);
+            var expression = ParseStatement();
+            var closeBracket = MatchToken(SyntaxKind.CloseBracketToken);
+            return new BracketedExpressionSyntax(sizeDirective, openBracket, expression, closeBracket);
         }
 
         private ExpressionSyntax ParseNameExpression()

@@ -2,6 +2,11 @@
 
 Extensible script compiler and executor. Will have support for [CheatEngine](https://www.cheatengine.org/) scripts.
 
+## Usage
+
+### Tests
+To run the tests, build the `keystone.dll` from the [`keystone repository`](https://github.com/keystone-engine/keystone) and place it in the output directory of the test applications.
+
 ## Credits
 
 * .NET Foundation Contributors for [Roslyn](https://github.com/dotnet/roslyn).

@@ -42,9 +42,9 @@ namespace Basm.Architectures.X86.Tests
                 Assert.Equal(expectedBytes, instructionBuffer);
             }
         }
-        private static KeystoneAssembler CreateAssembler(IMemory memory)
+        private static Assembler CreateAssembler(IMemory memory)
         {
-            return new KeystoneAssembler(Keystone.Architecture.X86, Keystone.Mode.X32, memory);
+            return new Assembler(Keystone.Architecture.X86, Keystone.Mode.X32, memory);
         }
     }
 }

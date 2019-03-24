@@ -45,9 +45,9 @@ namespace Basm.Architectures.X64.Tests
             }
         }
 
-        private static KeystoneAssembler CreateAssembler(IMemory memory)
+        private static Assembler CreateAssembler(IMemory memory)
         {
-            return new KeystoneAssembler(Keystone.Architecture.X86, Keystone.Mode.X64, memory);
+            return new Assembler(Keystone.Architecture.X86, Keystone.Mode.X64, memory);
         }
     }
 }

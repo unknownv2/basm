@@ -8,13 +8,13 @@ using Keystone;
 
 namespace Basm.Assemblers.KeystoneAssembler
 {
-    public class KeystoneAssembler
+    public class Assembler
     {
         private readonly IMemory _memory;
         private readonly Mode _mode;
         private readonly Architecture _architecture;
 
-        public KeystoneAssembler(Architecture architecture, Mode mode, IMemory memory)
+        public Assembler(Architecture architecture, Mode mode, IMemory memory)
         {
             _architecture = architecture;
             _mode = mode;

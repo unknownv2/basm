@@ -273,10 +273,10 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             "aobscanmodule",
             "dealloc",
             "loadlibrary",
+            "label",
             "readmem",
             "registersymbol",
             "unregistersymbol"
-
         };
     }
 }

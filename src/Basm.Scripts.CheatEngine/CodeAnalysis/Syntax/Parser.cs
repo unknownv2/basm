@@ -74,7 +74,6 @@ namespace Basm.Scripts.CheatEngine.CodeAnalysis.Syntax
             return new CheatEngineSyntaxToken(kind, Current.Position, null, null);
         }
 
-
         private ExpressionStatementSyntax ParseExpressionStatement()
         {
             var expression = ParseExpression();
